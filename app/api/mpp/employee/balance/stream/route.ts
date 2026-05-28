@@ -3,7 +3,7 @@ import { streamVesting } from '@/lib/contracts'
 import { createServerClient } from '@/lib/supabase-server'
 import { formatSusdcUnits } from '@/lib/susdc'
 
-/** 365.25 * 24 * 3600 — demo ~$100k/yr in sUSDC (18 decimals). */
+/** 365.25 * 24 * 3600 — demo ~$100k/yr in sUSDC (6 decimals). */
 const SECONDS_PER_YEAR = 31557600n
 const SALARY_PER_SECOND = (100_000n * 10n ** 18n) / SECONDS_PER_YEAR
 

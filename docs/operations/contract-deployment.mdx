@@ -3,38 +3,39 @@ title: "Smart Contract Deployment"
 description: "Deploy the Axios protocol to Somnia with Foundry."
 ---
 
-Contracts live under `contracts/`. The **`Deploy.s.sol`** script deploys, in order:
+Contracts live under `contracts/`. The **`scripts/deploy-somnia.sh`** helper deploys, in order:
 
-1. **ComplianceRegistry**
-2. **PayrollTreasury** (sUSDC token address is fixed in the script for Somnia)
-3. **PayrollBatcher** — then `treasury.setBatcher(batcher)`
-4. **EmployeeRegistry**
-5. **StreamVesting**
-6. **YieldRouter**
+1. **sUSDC** — mock USDC (6 decimals), mints 1,000,000 sUSDC to the deployer
+2. **ComplianceRegistry**
+3. **PayrollTreasury** (wired to the new sUSDC address)
+4. **PayrollBatcher** — then `treasury.setBatcher(batcher)`
+5. **EmployeeRegistry**
+6. **StreamVesting**
+7. **YieldRouter**
+
+Somnia testnet often needs a high per-tx gas limit (~10M). The shell script passes `--gas-limit 10000000` to each `forge create` call.
 
 ## Prerequisites
 
 - [Foundry](https://book.getfoundry.sh/) (`forge`, `cast`)
 - A funded **deployer** wallet on Somnia testnet (gas in testnet STT — use the [Somnia faucet](https://testnet.somnia.network/))
-- `DEPLOYER_PRIVATE_KEY` in `.env.local` (hex, with or without `0x` prefix)
+- `DEPLOYER_PRIVATE_KEY` exported in the shell (hex, **with `0x` prefix**)
 
 ## Deploy
 
 From the repo root:
 
 ```bash
+export DEPLOYER_PRIVATE_KEY=0xYourKey
 pnpm run contracts:deploy:somnia
 ```
 
-Or manually:
+Or run the script directly:
 
 ```bash
-cd contracts
-forge build
-forge script script/Deploy.s.sol:Deploy --rpc-url https://dream-rpc.somnia.network/ --broadcast -vvv
+export DEPLOYER_PRIVATE_KEY=0xYourKey
+./scripts/deploy-somnia.sh
 ```
-
-Export `DEPLOYER_PRIVATE_KEY` in the shell if it is not picked up automatically.
 
 ## After deployment
 
@@ -43,4 +44,11 @@ Export `DEPLOYER_PRIVATE_KEY` in the shell if it is not picked up automatically.
 3. Update **`employers.treasury_contract`** in Supabase if you want the UI to show the new treasury address for existing rows.
 4. **Treasury balances** are per contract address — funding on the old treasury does **not** migrate automatically.
 
-Broadcast artifacts: `contracts/broadcast/Deploy.s.sol/50312/run-latest.json`.
+Mint test sUSDC to employer wallets with:
+
+```bash
+cast send $NEXT_PUBLIC_SUSDC_ADDRESS "mint(address,uint256)" <wallet> 1000000000 \
+  --rpc-url https://dream-rpc.somnia.network/ --private-key $DEPLOYER_PRIVATE_KEY --legacy
+```
+
+(`1000000000` = 1,000 sUSDC at 6 decimals.)

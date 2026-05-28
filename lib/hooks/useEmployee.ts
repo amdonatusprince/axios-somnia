@@ -107,7 +107,7 @@ export interface EmployeeBalanceResponse {
   payroll_received_usd: number
   /** @deprecated Use wallet_susdc_usd — on-chain sUSDC balance. */
   available_usd: number
-  /** ERC-20 decimals for `available_raw` (sUSDC = 18 on Somnia). */
+  /** ERC-20 decimals for `available_raw` (sUSDC = 6 on Somnia). */
   decimals?: number
 }
 

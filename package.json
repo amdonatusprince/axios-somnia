@@ -9,7 +9,7 @@
     "type-check": "tsc --noEmit",
     "contracts:build": "cd contracts && forge build",
     "contracts:test": "cd contracts && forge test",
-    "contracts:deploy:somnia": "cd contracts && forge script script/Deploy.s.sol:Deploy --rpc-url https://dream-rpc.somnia.network/ --broadcast -vvv"
+    "contracts:deploy:somnia": "bash scripts/deploy-somnia.sh"
   },
   "dependencies": {
     "@lit-protocol/vincent-ability-evm-transaction-signer": "^0.2.2",

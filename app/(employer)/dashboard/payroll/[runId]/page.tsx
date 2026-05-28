@@ -199,7 +199,7 @@ export default function PayrollRunDetailsPage({ params }: { params: Promise<{ ru
           </div>
 
           <p className="text-xs text-[var(--text-muted)]">
-            Amounts are stored and displayed in USD; on-chain settlement uses sUSDC (18 decimals).
+            Amounts are stored and displayed in USD; on-chain settlement uses sUSDC (6 decimals).
           </p>
         </div>
       ) : null}

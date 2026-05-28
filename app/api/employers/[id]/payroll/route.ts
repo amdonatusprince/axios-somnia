@@ -67,7 +67,7 @@ export async function POST(req: NextRequest, ctx: RouteContext) {
     )
   }
 
-  // ── 1. Compute total in token units (sUSDC uses 18 decimals on Somnia) ─────
+  // ── 1. Compute total in token units (sUSDC uses 6 decimals on Somnia) ─────
   let totalUnits = 0n
   const amountsInUnits: bigint[] = []
 

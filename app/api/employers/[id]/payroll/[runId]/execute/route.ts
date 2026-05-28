@@ -119,7 +119,7 @@ export async function POST(req: NextRequest, ctx: RouteContext) {
             'Only the batcher owner or addresses in authorizedAgents may call executeBatchPayroll. On-chain, call authorizeAgent(agent) on PayrollBatcher from the deployer/owner wallet.',
           payroll_batcher_address: payrollBatcher.address,
           agent_address: agentAddress,
-          hint: `cast send ${payrollBatcher.address} "authorizeAgent(address)" ${agentAddress} --rpc-url $MEZO_RPC --private-key <OWNER_KEY>`,
+          hint: `cast send ${payrollBatcher.address} "authorizeAgent(address)" ${agentAddress} --rpc-url $SOMNIA_RPC --private-key <OWNER_KEY>`,
         },
         { status: 403 },
       )

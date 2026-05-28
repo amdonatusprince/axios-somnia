@@ -12,7 +12,7 @@ Axios runs payroll through Foundry-deployed contracts (`PayrollTreasury`, `Payro
 | Layer | Technology |
 |-------|-----------|
 | Chain | Somnia testnet (chain ID **50312**) |
-| Stablecoin | sUSDC (`0x118917a40FAF1CD7a13dB0Ef56C86De7973Ac503`) |
+| Stablecoin | sUSDC (6 decimals — deploy via `pnpm run contracts:deploy:somnia`) |
 | Compliance | `ComplianceRegistry` (owner-managed allow/block) |
 | Machine payments | MPP route handlers + `/.well-known/x402` discovery |
 | Fiat rails | Stripe Bridge API (where enabled) |

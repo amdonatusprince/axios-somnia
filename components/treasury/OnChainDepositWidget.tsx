@@ -178,7 +178,7 @@ export function OnChainDepositWidget({ employer }: Props) {
           <p className="text-sm font-medium text-[var(--text-primary)]">Deposit confirmed</p>
           <p className="text-xs text-[var(--text-muted)]">
             {lastDepositWei != null
-              ? `${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 18 }).format(Number(formatSusdcUnits(lastDepositWei)))} sUSDC deposited. Your payroll balance will update shortly.`
+              ? `${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 6 }).format(Number(formatSusdcUnits(lastDepositWei)))} sUSDC deposited. Your payroll balance will update shortly.`
               : 'Deposit confirmed. Your payroll balance will update shortly.'}
           </p>
           {depositTx && (
@@ -218,7 +218,7 @@ export function OnChainDepositWidget({ employer }: Props) {
             <span className="text-xs text-[var(--text-muted)] shrink-0 font-mono tabular-nums">
               {new Intl.NumberFormat('en-US', {
                 minimumFractionDigits: 2,
-                maximumFractionDigits: 18,
+                maximumFractionDigits: 6,
               }).format(Number(walletBalanceUsdStr))}{' '}
               sUSDC
             </span>
@@ -267,7 +267,7 @@ export function OnChainDepositWidget({ employer }: Props) {
         {hasInsufficientBalance && walletBalanceUsdStr !== null && (
           <p className="text-xs text-[var(--status-error)]">
             Insufficient balance (
-            {new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 18 }).format(
+            {new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 6 }).format(
               Number(walletBalanceUsdStr),
             )}{' '}
             sUSDC available)

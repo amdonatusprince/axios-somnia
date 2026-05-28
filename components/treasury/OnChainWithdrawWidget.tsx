@@ -155,7 +155,7 @@ export function OnChainWithdrawWidget({ employer }: Props) {
           <p className="text-sm font-medium text-[var(--text-primary)]">Withdrawal confirmed</p>
           <p className="text-xs text-[var(--text-muted)]">
             {lastWithdrawWei != null
-              ? `${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 18 }).format(Number(formatSusdcUnits(lastWithdrawWei)))} sUSDC sent to your wallet.`
+              ? `${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 6 }).format(Number(formatSusdcUnits(lastWithdrawWei)))} sUSDC sent to your wallet.`
               : 'sUSDC sent to your wallet.'}
           </p>
           {withdrawTx && (
@@ -200,7 +200,7 @@ export function OnChainWithdrawWidget({ employer }: Props) {
           <p className="flex-1 min-w-0 text-xs font-mono text-[var(--text-secondary)] truncate">{signerAddress}</p>
           {availableUsdStr !== null && (
             <span className="text-xs text-[var(--text-muted)] shrink-0 font-mono tabular-nums">
-              {new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 18 }).format(
+              {new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 6 }).format(
                 Number(availableUsdStr),
               )}{' '}
               avail.
@@ -217,7 +217,7 @@ export function OnChainWithdrawWidget({ employer }: Props) {
         <p className="text-xs text-[var(--text-secondary)]">
           Locked for payroll:{' '}
           <span className="font-mono tabular-nums">
-            {new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 18 }).format(
+            {new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 6 }).format(
               Number(formatSusdcUnits(lockedWei)),
             )}{' '}
             sUSDC
