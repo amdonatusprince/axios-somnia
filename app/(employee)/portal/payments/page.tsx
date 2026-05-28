@@ -7,7 +7,7 @@ import { useEmployee, useEmployeePayments, type PaymentWithRun } from '@/lib/hoo
 import { TxStatus } from '@/components/wallet/TxStatus'
 import { MemoDecoder } from '@/components/payroll/MemoDecoder'
 import { cn } from '@/lib/utils'
-import { TEMPO_EXPLORER_URL } from '@/lib/constants'
+import { SOMNIA_EXPLORER_URL } from '@/lib/constants'
 import { byteaMemoToHex } from '@/lib/memo'
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -131,7 +131,7 @@ function PaymentCard({ payment }: { payment: PaymentWithRun }) {
                   <div className="flex items-center gap-2">
                     <p className="font-mono text-xs text-[var(--mono)] truncate flex-1">{payment.tx_hash}</p>
                     <a
-                      href={`${TEMPO_EXPLORER_URL}/tx/${payment.tx_hash}`}
+                      href={`${SOMNIA_EXPLORER_URL}/tx/${payment.tx_hash}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-[var(--text-muted)] hover:text-[var(--accent)] shrink-0"
@@ -167,7 +167,7 @@ function PaymentCard({ payment }: { payment: PaymentWithRun }) {
 
               {payment.tx_hash ? (
                 <a
-                  href={`${TEMPO_EXPLORER_URL}/tx/${payment.tx_hash}`}
+                  href={`${SOMNIA_EXPLORER_URL}/tx/${payment.tx_hash}`}
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center gap-2 text-xs text-[var(--accent)] hover:underline"

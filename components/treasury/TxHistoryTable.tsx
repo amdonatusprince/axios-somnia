@@ -3,7 +3,7 @@
 import * as React from 'react'
 import { ExternalLink } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { TEMPO_EXPLORER_URL } from '@/lib/constants'
+import { SOMNIA_EXPLORER_URL } from '@/lib/constants'
 
 // ─── Types ─────────────────────────────────────────────────────────────────
 
@@ -118,7 +118,7 @@ export function TxHistoryTable({
                   <td className="px-5 py-4">
                     {tx.txHash ? (
                       <a
-                        href={`${TEMPO_EXPLORER_URL}/tx/${tx.txHash}`}
+                        href={`${SOMNIA_EXPLORER_URL}/tx/${tx.txHash}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center gap-1 font-mono text-xs text-[var(--mono)] hover:underline"

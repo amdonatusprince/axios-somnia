@@ -88,7 +88,7 @@ export default function PortalHomePage() {
   const companyName = employer?.company_name ?? 'Your company'
   const isStreaming = employee?.pay_frequency === 'stream'
   const payrollReceived = balanceData?.payroll_received_usd ?? 0
-  const walletMusd = balanceData?.wallet_susdc_usd ?? balanceData?.available_usd ?? 0
+  const walletSusdc = balanceData?.wallet_susdc_usd ?? balanceData?.available_usd ?? 0
 
   const annualForStream = annualSalaryUsd(employee?.salary_amount ?? null, employee?.pay_frequency)
   const salaryPerSecond =
@@ -156,12 +156,12 @@ export default function PortalHomePage() {
               <p className="text-xs text-[var(--text-muted)] mb-1">sUSDC in payroll wallet</p>
               {isStreaming ? (
                 <BalanceTicker
-                  balance={walletMusd}
+                  balance={walletSusdc}
                   ratePerSecond={salaryPerSecond}
                   className="text-lg"
                 />
               ) : (
-                <p className="number-xl text-lg text-[var(--text-secondary)]">{formatUsd(walletMusd)}</p>
+                <p className="number-xl text-lg text-[var(--text-secondary)]">{formatUsd(walletSusdc)}</p>
               )}
             </div>
           </div>

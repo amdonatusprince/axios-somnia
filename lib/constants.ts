@@ -25,18 +25,10 @@ export const YIELD_ROUTER_ADDRESS = (process.env.NEXT_PUBLIC_YIELD_ROUTER ??
   '0x0000000000000000000000000000000000000000') as `0x${string}`
 
 /** @deprecated Use SOMNIA_EXPLORER_URL */
-export const MEZO_EXPLORER_URL = SOMNIA_EXPLORER_URL
-/** @deprecated Use SUSDC_ADDRESS */
-export const MUSD_ADDRESS = SUSDC_ADDRESS
-/** @deprecated Use SUSDC_DECIMALS */
-export const MUSD_DECIMALS = SUSDC_DECIMALS
+export const TEMPO_EXPLORER_URL = SOMNIA_EXPLORER_URL
 /** @deprecated Use COMPLIANCE_REGISTRY_ADDRESS */
 export const TIP403_REGISTRY = COMPLIANCE_REGISTRY_ADDRESS
 /** @deprecated Use SOMNIA_RPC_URL */
 export const TEMPO_RPC_URL = SOMNIA_RPC_URL
 /** @deprecated Use SOMNIA_CHAIN_ID */
 export const TEMPO_CHAIN_ID = SOMNIA_CHAIN_ID
-/** @deprecated Use SOMNIA_CHAIN_ID */
-export const MEZO_CHAIN_ID = SOMNIA_CHAIN_ID
-/** @deprecated Use SOMNIA_RPC_URL */
-export const MEZO_RPC_URL = SOMNIA_RPC_URL

@@ -19,10 +19,3 @@ export function formatSusdcUnits(units: bigint): string {
 export function susdcUnitsToNumber(units: bigint): number {
   return Number(formatUnits(units, SUSDC_DECIMALS))
 }
-
-/** @deprecated Use susdcToUnits */
-export const susdcToUnits = susdcToUnits
-/** @deprecated Use formatSusdcUnits */
-export const formatSusdcUnits = formatSusdcUnits
-/** @deprecated Use susdcUnitsToNumber */
-export const susdcUnitsToNumber = susdcUnitsToNumber

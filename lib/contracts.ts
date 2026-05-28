@@ -37,13 +37,7 @@ export const somniaTestnet = defineChain({
   blockExplorers: { default: { name: 'Somnia Explorer', url: SOMNIA_EXPLORER_URL } },
 })
 
-/** @deprecated Use somniaTestnet */
-export const somniaTestnet = somniaTestnet
-
 export const somniaTransport = http(SOMNIA_RPC_URL)
-
-/** @deprecated Use somniaTransport */
-export const mezoTransport = somniaTransport
 
 export const publicClient = createPublicClient({
   transport: somniaTransport,
@@ -94,11 +88,6 @@ export const susdcToken = getContract({
   abi: Erc20BalanceAbi,
   client: publicClient,
 })
-
-/** @deprecated Use susdcToken */
-export const susdcToken = susdcToken
-/** @deprecated Use susdcToken */
-export const pathUsdToken = susdcToken
 
 export const payrollBatcher = getContract({
   address: PAYROLL_BATCHER_ADDRESS,

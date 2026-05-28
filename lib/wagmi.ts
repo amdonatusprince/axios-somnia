@@ -21,5 +21,3 @@ export const wagmiConfig = createConfig({
 })
 
 export { somniaTestnet }
-/** @deprecated Use somniaTestnet */
-export { somniaTestnet as somniaTestnet }

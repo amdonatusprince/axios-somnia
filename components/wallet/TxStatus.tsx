@@ -4,7 +4,7 @@ import * as React from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { CheckCircle, XCircle, ExternalLink } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { TEMPO_EXPLORER_URL } from '@/lib/constants'
+import { SOMNIA_EXPLORER_URL } from '@/lib/constants'
 
 type TxStatusState = 'pending' | 'confirming' | 'confirmed' | 'failed'
 
@@ -62,7 +62,7 @@ export function TxStatus({ status, hash, txHash, confirmTime, className }: TxSta
               : 'Confirmed'}
             {resolvedHash && (
               <a
-                href={`${TEMPO_EXPLORER_URL}/tx/${resolvedHash}`}
+                href={`${SOMNIA_EXPLORER_URL}/tx/${resolvedHash}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[var(--text-muted)] hover:text-[var(--accent)]"

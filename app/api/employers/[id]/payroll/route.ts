@@ -4,7 +4,7 @@ import { createServerClient } from '@/lib/supabase-server'
 import { getAuthorizedEmployer, getEmployerOnchainIdentityForRequest } from '@/lib/auth'
 import { treasury, tip403Registry } from '@/lib/contracts'
 import { PayrollBatcherABI } from '@/lib/abis/PayrollBatcher'
-import { PAYROLL_BATCHER_ADDRESS, PATHUSD_ADDRESS, PAYROLL_TREASURY_ADDRESS } from '@/lib/constants'
+import { PAYROLL_BATCHER_ADDRESS, SUSDC_ADDRESS, PAYROLL_TREASURY_ADDRESS } from '@/lib/constants'
 import { SUSDC_DECIMALS } from '@/lib/constants'
 import { susdcToUnits } from '@/lib/susdc'
 import { encodeMemo, memoHexToBytea } from '@/lib/memo'
@@ -158,7 +158,7 @@ export async function POST(req: NextRequest, ctx: RouteContext) {
         status: 'pending',
         total_amount: Number(totalUnits) / 10 ** SUSDC_DECIMALS,
         employee_count: items.length,
-        token_address: PATHUSD_ADDRESS,
+        token_address: SUSDC_ADDRESS,
         created_by: employer.owner_user_id,
       })
       .select('id')

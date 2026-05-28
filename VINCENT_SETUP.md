@@ -73,7 +73,7 @@ LIT_API_KEY=<key> VINCENT_PKP_ETH_ADDRESS=0x... npx ts-node scripts/setup-vincen
 
 ## Fund the PKP Wallet
 
-For agent-initiated transactions on Tempo L1, the PKP wallet needs pathUSD for payroll funds and LPX/ETH for gas. Deposit to:
+For agent-initiated transactions on Tempo L1, the PKP wallet needs sUSDC for payroll funds and LPX/ETH for gas. Deposit to:
 
 ```
 0x3324a8B644a78ed5c9EEBbD0e661b67FE417342F  (PKP wallet — Tempo L1, chainId 4217)

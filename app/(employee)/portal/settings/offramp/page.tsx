@@ -37,7 +37,7 @@ export default function PortalOfframpSettingsPage() {
     <div className="mx-auto max-w-[640px] space-y-6 px-4 pb-24 pt-6">
       <SectionHeader
         title="Off-ramp Settings"
-        description="Move available PATHUSD balance into a connected bank account when your employee profile is ready."
+        description="Move available sUSDC balance into a connected bank account when your employee profile is ready."
       />
 
       <div className="grid gap-4 sm:grid-cols-2">

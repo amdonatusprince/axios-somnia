@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getAuthorizedEmployee } from '@/lib/auth'
-import { pathUsdToken } from '@/lib/contracts'
+import { susdcToken } from '@/lib/contracts'
 import { createServerClient } from '@/lib/supabase-server'
 import { SUSDC_DECIMALS } from '@/lib/constants'
 import { susdcUnitsToNumber } from '@/lib/susdc'
@@ -42,16 +42,16 @@ export async function GET(req: NextRequest, ctx: RouteContext) {
     })
   }
 
-  const balance = (await pathUsdToken.read.balanceOf([employee.wallet_address as `0x${string}`])) as bigint
-  const walletMusd = susdcUnitsToNumber(balance)
+  const balance = (await susdcToken.read.balanceOf([employee.wallet_address as `0x${string}`])) as bigint
+  const walletSusdc = susdcUnitsToNumber(balance)
 
   return NextResponse.json({
     wallet_address: employee.wallet_address,
     available_raw: balance.toString(),
     /** On-chain sUSDC ERC-20 balance of the payroll wallet (may differ if funds moved). */
-    wallet_susdc_usd: walletMusd,
+    wallet_susdc_usd: walletSusdc,
     /** Legacy alias — same as wallet_susdc_usd. */
-    available_usd: walletMusd,
+    available_usd: walletSusdc,
     /** Total of payroll line items credited from employer treasury (Axios records). */
     payroll_received_usd: payrollReceivedUsd,
     decimals: SUSDC_DECIMALS,

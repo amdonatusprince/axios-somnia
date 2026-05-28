@@ -16,7 +16,7 @@ Axios runs payroll through Foundry-deployed contracts (`PayrollTreasury`, `Payro
 | Compliance | `ComplianceRegistry` (owner-managed allow/block) |
 | Machine payments | MPP route handlers + `/.well-known/x402` discovery |
 | Fiat rails | Stripe Bridge API (where enabled) |
-| Wallets | RainbowKit + wagmi + viem (Somnia testnet); `@mezo-org/passport` removed for Next 15 / webpack compatibility |
+| Wallets | RainbowKit + wagmi + viem (Somnia testnet) |
 | Agent signing | Vincent / Lit Protocol PKPs (optional) |
 | Frontend | Next.js 15 App Router, TypeScript, Tailwind, shadcn/ui |
 | Database | Supabase (PostgreSQL, RLS) |

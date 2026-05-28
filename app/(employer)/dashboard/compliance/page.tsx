@@ -9,7 +9,7 @@ import { ComplianceBadge } from '@/components/employee/ComplianceBadge'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { useEmployer } from '@/lib/hooks/useEmployer'
 import { useEmployerCompliance } from '@/lib/hooks/useDashboard'
-import { TEMPO_EXPLORER_URL } from '@/lib/constants'
+import { SOMNIA_EXPLORER_URL } from '@/lib/constants'
 
 function formatDate(iso: string | null) {
   if (!iso) return '—'
@@ -119,7 +119,7 @@ export default function CompliancePage() {
             <p className="mt-1 text-sm leading-6 text-[var(--text-secondary)]">{data.policy.description}</p>
           </div>
           <a
-            href={`${TEMPO_EXPLORER_URL}/address/${data.policy.address}`}
+            href={`${SOMNIA_EXPLORER_URL}/address/${data.policy.address}`}
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-1 text-xs font-medium text-[var(--accent)] hover:underline"

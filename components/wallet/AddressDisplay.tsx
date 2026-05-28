@@ -3,7 +3,7 @@
 import * as React from 'react'
 import { Copy, Check, ExternalLink } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { TEMPO_EXPLORER_URL } from '@/lib/constants'
+import { SOMNIA_EXPLORER_URL } from '@/lib/constants'
 
 interface AddressDisplayProps {
   address: string
@@ -52,7 +52,7 @@ export function AddressDisplay({
       </button>
       {showExplorer && (
         <a
-          href={`${TEMPO_EXPLORER_URL}/address/${address}`}
+          href={`${SOMNIA_EXPLORER_URL}/address/${address}`}
           target="_blank"
           rel="noopener noreferrer"
           className="shrink-0 text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors"
