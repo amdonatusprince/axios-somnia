@@ -7,11 +7,14 @@ import { DepositPanel } from '@/components/treasury/DepositPanel'
 import { OnChainDepositWidget } from '@/components/treasury/OnChainDepositWidget'
 import { OnChainWithdrawWidget } from '@/components/treasury/OnChainWithdrawWidget'
 import { FundingReadinessCard } from '@/components/treasury/FundingReadinessCard'
+import { TreasuryCard } from '@/components/treasury/TreasuryCard'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { useEmployer } from '@/lib/hooks/useEmployer'
+import { useTreasury } from '@/lib/hooks/useDashboard'
 
 export default function TreasuryDepositPage() {
   const { data: employer } = useEmployer()
+  const { data: treasuryData } = useTreasury(employer?.id)
 
   return (
     <div className="space-y-6">
@@ -26,6 +29,12 @@ export default function TreasuryDepositPage() {
             </Link>
           </Button>
         }
+      />
+
+      <TreasuryCard
+        available={treasuryData?.available_usd ?? 0}
+        locked={treasuryData?.locked_usd ?? 0}
+        className="w-full"
       />
 
       <div className="grid gap-4 xl:grid-cols-[1.05fr_0.95fr]">

@@ -2,22 +2,22 @@
 
 import * as React from 'react'
 import { useQueryClient } from '@tanstack/react-query'
-import { useAccount, useWalletClient } from 'wagmi'
-import { encodeFunctionData, keccak256, encodePacked } from 'viem'
+import { useAccount } from 'wagmi'
+import { encodeFunctionData } from 'viem'
 import { Loader2, ArrowDownToLine, CheckCircle2, AlertCircle, Wallet } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { publicClient } from '@/lib/contracts'
-import { somniaTestnet } from '@/lib/wagmi'
 import { SOMNIA_EXPLORER_URL, PAYROLL_TREASURY_ADDRESS } from '@/lib/constants'
-import { formatSusdcUnits, susdcToUnits } from '@/lib/susdc'
+import { sendInjectedTransaction } from '@/lib/injected-wallet'
+import { formatSusdcDisplay, formatSusdcUnits, susdcToUnits } from '@/lib/susdc'
 import { PayrollTreasuryABI } from '@/lib/abis/PayrollTreasury'
+import {
+  refreshTreasuryBalances,
+  useOnchainTreasuryBalance,
+} from '@/lib/hooks/useOnchainTreasuryBalance'
 import type { Database } from '@/lib/database.types'
 
 type Employer = Database['public']['Tables']['employers']['Row']
-
-function employerAccountId(signer: `0x${string}`): `0x${string}` {
-  return keccak256(encodePacked(['address'], [signer]))
-}
 
 type WithdrawStatus = 'idle' | 'withdrawing' | 'success'
 
@@ -26,57 +26,23 @@ interface Props {
 }
 
 export function OnChainWithdrawWidget({ employer }: Props) {
-  const { address, isConnected } = useAccount()
-  const { data: walletClient } = useWalletClient({ chainId: somniaTestnet.id })
+  const { address } = useAccount()
   const queryClient = useQueryClient()
+  const signerAddress = (address ?? null) as `0x${string}` | null
+  const adminWallet = employer.employer_admin_wallet
+
+  const { data: treasuryBalances } = useOnchainTreasuryBalance(signerAddress)
+  const availableWei = treasuryBalances?.available ?? null
+  const lockedWei = treasuryBalances?.locked ?? null
 
   const [amount, setAmount] = React.useState('')
   const [status, setStatus] = React.useState<WithdrawStatus>('idle')
   const [error, setError] = React.useState<string | null>(null)
   const [withdrawTx, setWithdrawTx] = React.useState<`0x${string}` | null>(null)
   const [lastWithdrawWei, setLastWithdrawWei] = React.useState<bigint | null>(null)
-  const [availableWei, setAvailableWei] = React.useState<bigint | null>(null)
-  const [lockedWei, setLockedWei] = React.useState<bigint | null>(null)
-
-  const signerAddress = address ?? null
-  const adminWallet = employer.employer_admin_wallet
-
-  const refreshBalances = React.useCallback(async () => {
-    if (!signerAddress) {
-      setAvailableWei(null)
-      setLockedWei(null)
-      return
-    }
-    const id = employerAccountId(signerAddress)
-    try {
-      const [a, l] = await Promise.all([
-        publicClient.readContract({
-          address: PAYROLL_TREASURY_ADDRESS,
-          abi: PayrollTreasuryABI,
-          functionName: 'getAvailableBalance',
-          args: [id],
-        }) as Promise<bigint>,
-        publicClient.readContract({
-          address: PAYROLL_TREASURY_ADDRESS,
-          abi: PayrollTreasuryABI,
-          functionName: 'getLockedBalance',
-          args: [id],
-        }) as Promise<bigint>,
-      ])
-      setAvailableWei(a)
-      setLockedWei(l)
-    } catch {
-      setAvailableWei(null)
-      setLockedWei(null)
-    }
-  }, [signerAddress])
-
-  React.useEffect(() => {
-    void refreshBalances()
-  }, [refreshBalances])
 
   async function handleWithdraw() {
-    if (!signerAddress || !walletClient) return
+    if (!signerAddress) return
     const trimmed = amount.trim()
     if (!trimmed) return
 
@@ -104,9 +70,8 @@ export function OnChainWithdrawWidget({ employer }: Props) {
         functionName: 'withdraw',
         args: [amountWei],
       })
-      const hash = await walletClient.sendTransaction({
+      const hash = await sendInjectedTransaction({
         account: signerAddress,
-        chain: somniaTestnet,
         to: PAYROLL_TREASURY_ADDRESS,
         data,
       })
@@ -115,16 +80,13 @@ export function OnChainWithdrawWidget({ employer }: Props) {
 
       setLastWithdrawWei(amountWei)
       setStatus('success')
-      void queryClient.invalidateQueries({ queryKey: ['treasury'] })
-      void refreshBalances()
+      await refreshTreasuryBalances(queryClient, { employerId: employer.id })
     } catch (err) {
       setStatus('idle')
       setError(err instanceof Error ? err.message : 'Transaction failed. Please try again.')
     }
   }
 
-  const availableUsdStr =
-    availableWei !== null ? formatSusdcUnits(availableWei) : null
   const amountWeiParsed = React.useMemo(() => {
     const t = amount.trim()
     if (!t) return null
@@ -138,12 +100,13 @@ export function OnChainWithdrawWidget({ employer }: Props) {
 
   const hasInsufficient =
     availableWei !== null && amountWeiParsed !== null && amountWeiParsed > availableWei
+  const isLoading = status === 'withdrawing'
+
   const canWithdraw =
-    isConnected &&
-    status !== 'withdrawing' &&
+    Boolean(signerAddress) &&
+    !isLoading &&
     status !== 'success' &&
     amountWeiParsed !== null &&
-    Boolean(walletClient) &&
     !hasInsufficient &&
     (availableWei === null || availableWei > 0n)
 
@@ -155,7 +118,7 @@ export function OnChainWithdrawWidget({ employer }: Props) {
           <p className="text-sm font-medium text-[var(--text-primary)]">Withdrawal confirmed</p>
           <p className="text-xs text-[var(--text-muted)]">
             {lastWithdrawWei != null
-              ? `${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 6 }).format(Number(formatSusdcUnits(lastWithdrawWei)))} sUSDC sent to your wallet.`
+              ? `${formatSusdcDisplay(lastWithdrawWei)} sUSDC sent to your wallet.`
               : 'sUSDC sent to your wallet.'}
           </p>
           {withdrawTx && (
@@ -198,12 +161,9 @@ export function OnChainWithdrawWidget({ employer }: Props) {
         <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-[var(--bg-subtle)]">
           <Wallet className="h-4 w-4 text-[var(--text-muted)] shrink-0" />
           <p className="flex-1 min-w-0 text-xs font-mono text-[var(--text-secondary)] truncate">{signerAddress}</p>
-          {availableUsdStr !== null && (
-            <span className="text-xs text-[var(--text-muted)] shrink-0 font-mono tabular-nums">
-              {new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 6 }).format(
-                Number(availableUsdStr),
-              )}{' '}
-              avail.
+          {availableWei !== null && (
+            <span className="text-xs text-[var(--text-muted)] shrink-0 tabular-nums">
+              {formatSusdcDisplay(availableWei)} sUSDC avail.
             </span>
           )}
         </div>
@@ -216,13 +176,7 @@ export function OnChainWithdrawWidget({ employer }: Props) {
       {lockedWei !== null && lockedWei > 0n && (
         <p className="text-xs text-[var(--text-secondary)]">
           Locked for payroll:{' '}
-          <span className="font-mono tabular-nums">
-            {new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 6 }).format(
-              Number(formatSusdcUnits(lockedWei)),
-            )}{' '}
-            sUSDC
-          </span>{' '}
-          (not withdrawable yet)
+          <span className="tabular-nums font-medium">{formatSusdcDisplay(lockedWei)} sUSDC</span> (not withdrawable yet)
         </p>
       )}
 
@@ -254,12 +208,12 @@ export function OnChainWithdrawWidget({ employer }: Props) {
             onClick={() => setAmount(formatSusdcUnits(availableWei))}
             className="text-xs text-[var(--accent)] hover:underline"
           >
-            Withdraw max ({formatSusdcUnits(availableWei)} sUSDC)
+            Withdraw max ({formatSusdcDisplay(availableWei)} sUSDC)
           </button>
         )}
-        {hasInsufficient && availableUsdStr !== null && (
+        {hasInsufficient && availableWei !== null && (
           <p className="text-xs text-[var(--status-error)]">
-            Exceeds available ({availableUsdStr} sUSDC in treasury for this wallet)
+            Exceeds available ({formatSusdcDisplay(availableWei)} sUSDC in treasury for this wallet)
           </p>
         )}
       </div>
@@ -284,7 +238,7 @@ export function OnChainWithdrawWidget({ employer }: Props) {
             : 'bg-[var(--bg-subtle)] text-[var(--text-muted)] cursor-not-allowed',
         )}
       >
-        {status === 'withdrawing' ? (
+        {isLoading ? (
           <>
             <Loader2 className="h-4 w-4 animate-spin" />
             Withdrawing…

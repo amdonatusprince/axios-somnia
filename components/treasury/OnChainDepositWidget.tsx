@@ -2,14 +2,15 @@
 
 import * as React from 'react'
 import { useQueryClient } from '@tanstack/react-query'
-import { useAccount, useWalletClient } from 'wagmi'
+import { useAccount } from 'wagmi'
 import { encodeFunctionData } from 'viem'
 import { Loader2, ArrowRight, CheckCircle2, AlertCircle, Wallet } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { publicClient } from '@/lib/contracts'
-import { somniaTestnet } from '@/lib/wagmi'
 import { SOMNIA_EXPLORER_URL, SUSDC_ADDRESS, PAYROLL_TREASURY_ADDRESS } from '@/lib/constants'
-import { formatSusdcUnits, susdcToUnits } from '@/lib/susdc'
+import { sendInjectedTransaction } from '@/lib/injected-wallet'
+import { formatSusdcDisplay, formatSusdcUnits, susdcToUnits } from '@/lib/susdc'
+import { refreshTreasuryBalances } from '@/lib/hooks/useOnchainTreasuryBalance'
 import { PayrollTreasuryABI } from '@/lib/abis/PayrollTreasury'
 import type { Database } from '@/lib/database.types'
 
@@ -42,8 +43,7 @@ interface Props {
 }
 
 export function OnChainDepositWidget({ employer }: Props) {
-  const { address, isConnected } = useAccount()
-  const { data: walletClient } = useWalletClient({ chainId: somniaTestnet.id })
+  const { address } = useAccount()
   const queryClient = useQueryClient()
 
   const [amount, setAmount] = React.useState('')
@@ -59,29 +59,30 @@ export function OnChainDepositWidget({ employer }: Props) {
   const walletMatchesAdmin =
     Boolean(signerAddress && adminWallet && signerAddress.toLowerCase() === adminWallet.toLowerCase())
 
-  React.useEffect(() => {
-    if (!signerAddress) return
-    let cancelled = false
-    publicClient
-      .readContract({
+  const refreshWalletBalance = React.useCallback(async () => {
+    if (!signerAddress) {
+      setWalletBalance(null)
+      return
+    }
+    try {
+      const bal = (await publicClient.readContract({
         address: SUSDC_ADDRESS,
         abi: ERC20_ABI,
         functionName: 'balanceOf',
         args: [signerAddress],
-      })
-      .then((bal) => {
-        if (!cancelled) setWalletBalance(bal as bigint)
-      })
-      .catch(() => {
-        if (!cancelled) setWalletBalance(null)
-      })
-    return () => {
-      cancelled = true
+      })) as bigint
+      setWalletBalance(bal)
+    } catch {
+      setWalletBalance(null)
     }
   }, [signerAddress])
 
+  React.useEffect(() => {
+    void refreshWalletBalance()
+  }, [refreshWalletBalance])
+
   async function handleDeposit() {
-    if (!signerAddress || !walletClient) return
+    if (!signerAddress) return
     const trimmed = amount.trim()
     if (!trimmed) return
 
@@ -110,9 +111,8 @@ export function OnChainDepositWidget({ employer }: Props) {
         functionName: 'approve',
         args: [PAYROLL_TREASURY_ADDRESS, amountWei],
       })
-      const approveHash = await walletClient.sendTransaction({
+      const approveHash = await sendInjectedTransaction({
         account: signerAddress,
-        chain: somniaTestnet,
         to: SUSDC_ADDRESS,
         data: approveData,
       })
@@ -125,9 +125,8 @@ export function OnChainDepositWidget({ employer }: Props) {
         functionName: 'deposit',
         args: [amountWei, '0x0000000000000000000000000000000000000000000000000000000000000000'],
       })
-      const depositHash = await walletClient.sendTransaction({
+      const depositHash = await sendInjectedTransaction({
         account: signerAddress,
-        chain: somniaTestnet,
         to: PAYROLL_TREASURY_ADDRESS,
         data: depositData,
       })
@@ -136,7 +135,8 @@ export function OnChainDepositWidget({ employer }: Props) {
 
       setLastDepositWei(amountWei)
       setStatus('success')
-      void queryClient.invalidateQueries({ queryKey: ['treasury'] })
+      await refreshTreasuryBalances(queryClient, { employerId: employer.id })
+      await refreshWalletBalance()
     } catch (err) {
       setStatus('idle')
       setError(err instanceof Error ? err.message : 'Transaction failed. Please try again.')
@@ -156,19 +156,24 @@ export function OnChainDepositWidget({ employer }: Props) {
     }
   }, [amount])
 
-  const walletBalanceUsdStr =
-    walletBalance !== null ? formatSusdcUnits(walletBalance) : null
   const hasInsufficientBalance =
     walletBalance !== null &&
     amountWeiParsed !== null &&
     amountWeiParsed > walletBalance
   const canDeposit =
-    isConnected &&
+    Boolean(signerAddress) &&
     !isLoading &&
     status !== 'success' &&
     amountWeiParsed !== null &&
-    Boolean(walletClient) &&
     !hasInsufficientBalance
+
+  const depositBlockedReason = React.useMemo(() => {
+    if (!signerAddress) return 'Connect your wallet to deposit.'
+    if (!amount.trim()) return 'Enter an amount to deposit.'
+    if (amountWeiParsed === null) return 'Enter a valid amount (e.g. 100 or 99.50).'
+    if (hasInsufficientBalance) return 'Insufficient sUSDC in this wallet.'
+    return null
+  }, [signerAddress, amount, amountWeiParsed, hasInsufficientBalance])
 
   if (status === 'success') {
     return (
@@ -178,8 +183,8 @@ export function OnChainDepositWidget({ employer }: Props) {
           <p className="text-sm font-medium text-[var(--text-primary)]">Deposit confirmed</p>
           <p className="text-xs text-[var(--text-muted)]">
             {lastDepositWei != null
-              ? `${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 6 }).format(Number(formatSusdcUnits(lastDepositWei)))} sUSDC deposited. Your payroll balance will update shortly.`
-              : 'Deposit confirmed. Your payroll balance will update shortly.'}
+              ? `${formatSusdcDisplay(lastDepositWei)} sUSDC deposited. Treasury available balance updated.`
+              : 'Deposit confirmed. Treasury available balance updated.'}
           </p>
           {depositTx && (
             <a
@@ -214,13 +219,9 @@ export function OnChainDepositWidget({ employer }: Props) {
         <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-[var(--bg-subtle)]">
           <Wallet className="h-4 w-4 text-[var(--text-muted)] shrink-0" />
           <p className="flex-1 min-w-0 text-xs font-mono text-[var(--text-secondary)] truncate">{signerAddress}</p>
-          {walletBalanceUsdStr !== null && (
-            <span className="text-xs text-[var(--text-muted)] shrink-0 font-mono tabular-nums">
-              {new Intl.NumberFormat('en-US', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 6,
-              }).format(Number(walletBalanceUsdStr))}{' '}
-              sUSDC
+          {walletBalance !== null && (
+            <span className="text-xs text-[var(--text-muted)] shrink-0 tabular-nums">
+              {formatSusdcDisplay(walletBalance)} sUSDC
             </span>
           )}
         </div>
@@ -264,13 +265,9 @@ export function OnChainDepositWidget({ employer }: Props) {
           />
           <span className="text-xs text-[var(--text-muted)] shrink-0">sUSDC</span>
         </div>
-        {hasInsufficientBalance && walletBalanceUsdStr !== null && (
+        {hasInsufficientBalance && walletBalance !== null && (
           <p className="text-xs text-[var(--status-error)]">
-            Insufficient balance (
-            {new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 6 }).format(
-              Number(walletBalanceUsdStr),
-            )}{' '}
-            sUSDC available)
+            Insufficient balance ({formatSusdcDisplay(walletBalance)} sUSDC available)
           </p>
         )}
       </div>
@@ -303,6 +300,10 @@ export function OnChainDepositWidget({ employer }: Props) {
         </div>
       )}
 
+      {!canDeposit && depositBlockedReason && !error && (
+        <p className="text-xs text-[var(--text-muted)]">{depositBlockedReason}</p>
+      )}
+
       <button
         onClick={() => {
           void handleDeposit()
@@ -310,7 +311,9 @@ export function OnChainDepositWidget({ employer }: Props) {
         disabled={!canDeposit}
         className={cn(
           'w-full flex items-center justify-center gap-2 h-10 rounded-lg text-sm font-medium transition-colors',
-          canDeposit ? 'bg-[var(--accent)] text-white hover:opacity-90' : 'bg-[var(--bg-subtle)] text-[var(--text-muted)] cursor-not-allowed',
+          canDeposit
+            ? 'bg-emerald-800 text-white hover:bg-emerald-700 active:bg-emerald-900'
+            : 'bg-[var(--bg-subtle)] text-[var(--text-muted)] cursor-not-allowed',
         )}
       >
         {isLoading ? (
