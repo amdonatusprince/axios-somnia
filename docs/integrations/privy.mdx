@@ -1,0 +1,10 @@
+---
+title: "Privy (legacy)"
+description: "Historical note — current auth uses SIWE and RainbowKit."
+---
+
+The production Axios app uses **RainbowKit + wagmi + viem** on **Mezo testnet** and **Sign-In With Ethereum (SIWE)** for sessions. Successful verification sets an **httpOnly** cookie (`axios-token`) and optionally stores a **Bearer** token in client memory.
+
+**Privy** is not required for the default login path. Embedded-wallet flows described in older docs may be reintroduced alongside wagmi if you add Privy back; keep **employer** and **employee** wallet sessions distinct (employer dashboard vs employee portal).
+
+For Bridge KYC and cards, see [Bridge](/docs/integrations/bridge).

@@ -1,0 +1,21 @@
+---
+title: "Introduction"
+description: "Welcome to Axios: borderless enterprise payroll on Mezo."
+---
+
+Axios is borderless enterprise payroll on **Mezo**. Employers fund **PayrollTreasury** with **MUSD** (ERC-20), run compliant batch payouts, stream salary where configured, issue employee cards through Bridge, and expose the same workflows to software agents through MPP (HTTP 402 / x402).
+
+## App Surfaces
+
+- **Employer dashboard** — Fund treasury (deposit and **withdraw** available balance back to the employer wallet), run payroll batches, manage team and compliance, and monitor yield.
+- **Employee portal** — Shows **payroll received** (totals from recorded `payment_items`), **MUSD in the payroll wallet** (on-chain balance), and optional **company treasury available** for transparency. Uses the **employee** wallet session after invite onboarding, distinct from the employer admin wallet.
+
+## Protocol Layer
+
+On-chain execution uses **Solidity** contracts: **PayrollTreasury**, **PayrollBatcher**, **EmployeeRegistry**, **StreamVesting**, **YieldRouter**, and **ComplianceRegistry**. Transfers use standard ERC-20 with memo metadata; compliance is enforced via the on-chain registry.
+
+Programmatic access uses `/api/mpp/*` routes; paid flows can be wired to **x402** verification in `lib/mpp.ts` for production.
+
+## Next Steps
+
+See [Quickstart](/docs/quickstart) to run payroll or integrate Axios APIs.

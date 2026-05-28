@@ -1,0 +1,46 @@
+---
+title: "Smart Contract Deployment"
+description: "Deploy the Axios protocol to Mezo with Foundry."
+---
+
+Contracts live under `contracts/`. The **`Deploy.s.sol`** script deploys, in order:
+
+1. **ComplianceRegistry**
+2. **PayrollTreasury** (MUSD token address is fixed in the script for Mezo)
+3. **PayrollBatcher** — then `treasury.setBatcher(batcher)`
+4. **EmployeeRegistry**
+5. **StreamVesting**
+6. **YieldRouter**
+
+## Prerequisites
+
+- [Foundry](https://book.getfoundry.sh/) (`forge`, `cast`)
+- A funded **deployer** wallet on Mezo testnet (gas in testnet BTC — use the [Mezo faucet](https://faucet.test.mezo.org/))
+- `DEPLOYER_PRIVATE_KEY` in `.env.local` (hex, with or without `0x` prefix)
+
+## Deploy
+
+From the repo root:
+
+```bash
+pnpm run contracts:deploy:mezo
+```
+
+Or manually:
+
+```bash
+cd contracts
+forge build
+forge script script/Deploy.s.sol:Deploy --rpc-url https://rpc.test.mezo.org --broadcast -vvv
+```
+
+Export `DEPLOYER_PRIVATE_KEY` in the shell if it is not picked up automatically.
+
+## After deployment
+
+1. Copy the printed **`NEXT_PUBLIC_*`** addresses into **`.env.local`**.
+2. Restart the Next.js dev server.
+3. Update **`employers.treasury_contract`** in Supabase if you want the UI to show the new treasury address for existing rows.
+4. **Treasury balances** are per contract address — funding on the old treasury does **not** migrate automatically.
+
+Broadcast artifacts: `contracts/broadcast/Deploy.s.sol/31611/run-latest.json`.

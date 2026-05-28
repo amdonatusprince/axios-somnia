@@ -1,0 +1,48 @@
+---
+title: "Environment Variables"
+description: "Server and client configuration for Axios on Mezo."
+---
+
+Configure network, Supabase, session auth, and deployed contract addresses. **Never** expose server-only variables to the browser.
+
+## Public (`NEXT_PUBLIC_*`)
+
+| Variable | Description |
+|----------|-------------|
+| `NEXT_PUBLIC_APP_URL` | Public origin (e.g. `https://axios.xyz` or `http://localhost:3002`). |
+| `NEXT_PUBLIC_MEZO_RPC` | Mezo testnet RPC (default `https://rpc.test.mezo.org`). |
+| `NEXT_PUBLIC_MEZO_CHAIN_ID` | `31611` for Mezo testnet. |
+| `NEXT_PUBLIC_MUSD_ADDRESS` | MUSD ERC-20 address on Mezo. |
+| `NEXT_PUBLIC_COMPLIANCE_REGISTRY` | Deployed ComplianceRegistry. |
+| `NEXT_PUBLIC_PAYROLL_TREASURY` | Deployed PayrollTreasury. |
+| `NEXT_PUBLIC_PAYROLL_BATCHER` | Deployed PayrollBatcher. |
+| `NEXT_PUBLIC_EMPLOYEE_REGISTRY` | Deployed EmployeeRegistry. |
+| `NEXT_PUBLIC_STREAM_VESTING` | Deployed StreamVesting. |
+| `NEXT_PUBLIC_YIELD_ROUTER` | Deployed YieldRouter. |
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL. |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon (public) key. |
+| `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` | Optional — RainbowKit / WalletConnect; injected wallets work without it. |
+
+## Server-only
+
+| Variable | Description |
+|----------|-------------|
+| `SESSION_JWT_SECRET` | HS256 secret for session JWTs (or `MPP_SECRET_KEY` as fallback in code). |
+| `SUPABASE_SERVICE_KEY` | Service role key — bypasses RLS for API routes. |
+| `BRIDGE_API_KEY` | Bridge API (when using real Bridge). |
+| `BRIDGE_WEBHOOK_SECRET` | Verifies Bridge webhooks. |
+| `BRIDGE_USE_REAL_BRIDGE` / `BRIDGE_MOCK` | Toggle mock vs real Bridge in dev. |
+| `AXIOS_TREASURY_ADDRESS` | Fee recipient for x402 discovery (`REMLO_TREASURY_ADDRESS` still accepted as alias). |
+| `AXIOS_AGENT_PRIVATE_KEY` | Server agent key for demos (`REMLO_AGENT_PRIVATE_KEY` alias). |
+| `ADMIN_USER_IDS` | Comma-separated JWT `sub` values allowed for `/admin`. |
+| `RESEND_API_KEY` | Email (if configured). |
+| `CLAUDE_API_KEY` | Optional AI features. |
+| `STRIPE_SECRET_KEY` | Optional Stripe. |
+
+## Deployment
+
+| Variable | Description |
+|----------|-------------|
+| `DEPLOYER_PRIVATE_KEY` | Used only for `forge script` deploys to Mezo. |
+
+Copy **`.env.local.example`** to **`.env.local`** and fill values. See [Contract deployment](/docs/operations/contract-deployment) after changing contracts.

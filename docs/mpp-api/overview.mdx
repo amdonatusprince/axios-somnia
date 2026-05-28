@@ -1,0 +1,18 @@
+---
+title: "MPP Overview"
+description: "Turn your system endpoints into paid-per-use workflows."
+---
+
+The Machine Payment Protocol (MPP) lets you gate Axios functionality behind **HTTP 402** / **x402**-style payments. Agents and integrations pay per call (or per session) in **MUSD** on **Mezo testnet** instead of holding long-lived API keys.
+
+### Why MPP?
+
+Static API keys are risky if leaked. MPP ties access to **on-chain payment proofs** on Mezo, so each request can require a fresh micro-payment and receipt.
+
+### Core ideas
+
+- Endpoints declare cost and whether they need a one-shot payment or an open session.
+- Execution stays auditable with receipts tied to chain activity.
+- Usage scales with actual calls instead of flat monthly keys alone.
+
+See [Authentication](/docs/mpp-api/authentication) for the L402-style flow and [Payroll execution](/docs/mpp-api/payroll-execution) for batch payroll APIs.

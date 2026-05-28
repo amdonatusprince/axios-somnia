@@ -1,0 +1,24 @@
+---
+title: "Authentication"
+description: "HTTP 402 flows and agent keys for MPP."
+---
+
+MPP endpoints use **HTTP 402 Payment Required** flows: the server returns payment metadata; the client completes an **on-chain** payment on **Mezo testnet** (typically **MUSD**) and retries with a proof header.
+
+## Payment challenge
+
+On a paid route, the response describes the amount, asset, and recipient (e.g. **`AXIOS_TREASURY_ADDRESS`** / `REMLO_TREASURY_ADDRESS` alias for discovery). Your client or agent builds the transaction, submits it, and re-sends the original request with the required **Authorization** / receipt header as implemented in `lib/mpp.ts`.
+
+> **Local dev:** The MPP payment layer may be a **no-op** so routes are easier to test without broadcasting txs.
+
+## AgentCash
+
+You can use AgentCash-style tooling to automate the intercept → pay → retry loop instead of hand-rolling each 402 response.
+
+```bash
+npx agentcash try https://axios.xyz
+```
+
+## Browser and dashboard auth
+
+The web app’s **human** login is separate: **SIWE** + session JWT (see [Deployment](/docs/operations/deployment)). MPP **machine** auth uses wallet payments as above, not the employee/employer cookie session.

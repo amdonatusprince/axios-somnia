@@ -1,0 +1,46 @@
+---
+title: "Payroll Treasury"
+description: "PayrollTreasury — deposits, withdrawals, and balances on Mezo."
+---
+
+`PayrollTreasury` is the on-chain vault where employers hold **MUSD** before payroll. It uses explicit ERC-20 accounting (no native-balance shortcuts): **`getAvailableBalance`**, **`getLockedBalance`**, and per-employer state in the `employers` mapping.
+
+## Employer identity
+
+Each employer account is keyed by:
+
+```text
+employerId = keccak256(abi.encodePacked(msg.sender))
+```
+
+The **first deposit** from an address sets that address as **`admin`** for that `employerId`. Subsequent deposits from the same address add to **`balance`**.
+
+## Operations
+
+### Deposit
+
+`deposit(uint256 amount, bytes32 memo)` — `transferFrom` MUSD from `msg.sender` into the contract and credit **`balance`**.
+
+### Withdraw
+
+`withdraw(uint256 amount)` — moves **available** MUSD back to **`msg.sender`**. Requires:
+
+- `amount > 0`
+- Caller is the registered **`admin`** for `keccak256(abi.encodePacked(msg.sender))`
+- **`balance` ≥ amount** (only **available** funds; **locked** payroll collateral is not withdrawable until unlocked by the batcher)
+
+### Gas budget
+
+`fundGasBudget(uint256 amount)` — separate accounting for operational gas (ERC-20 held by the contract).
+
+### Batcher-only
+
+`lockFunds`, `releaseTo`, `unlockFunds` — called by **PayrollBatcher** to move value between **available** and **locked**, and to pay employees.
+
+## Token decimals
+
+MUSD on Mezo uses **18 decimals**. Format amounts in the app with the same precision as on-chain `uint256` values.
+
+## Dashboard
+
+The employer app supports **deposit** (approve + deposit) and **withdraw** (single transaction) when the deployed contract includes `withdraw`. After a new deployment, update **`NEXT_PUBLIC_PAYROLL_TREASURY`** and any **`employers.treasury_contract`** rows in Supabase.
