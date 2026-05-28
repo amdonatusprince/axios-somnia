@@ -1,23 +1,25 @@
 import { createConfig, http } from 'wagmi'
 import { injected } from 'wagmi/connectors'
-import { MEZO_RPC_URL } from '@/lib/constants'
-import { mezoTestnet } from '@/lib/contracts'
+import { SOMNIA_RPC_URL } from '@/lib/constants'
+import { somniaTestnet } from '@/lib/contracts'
 
 /**
  * Browser-extension wallets only (MetaMask, Rabby, Coinbase extension, etc.).
  * No WalletConnect / Reown — avoids cloud.reown.com allowlists and indexedDB on WC.
  */
 export const wagmiConfig = createConfig({
-  chains: [mezoTestnet],
+  chains: [somniaTestnet],
   connectors: [
     injected({
       shimDisconnect: true,
     }),
   ],
   transports: {
-    [mezoTestnet.id]: http(MEZO_RPC_URL),
+    [somniaTestnet.id]: http(SOMNIA_RPC_URL),
   },
   ssr: false,
 })
 
-export { mezoTestnet }
+export { somniaTestnet }
+/** @deprecated Use somniaTestnet */
+export { somniaTestnet as somniaTestnet }

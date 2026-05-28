@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-import {IERC20} from "../../src/interfaces/IERC20.sol";
+import {IERC20} from "./interfaces/IERC20.sol";
 
-contract MockERC20 is IERC20 {
-    string public constant name = "Mock sUSDC";
-    string public constant symbol = "msUSDC";
+/// @notice Mock USDC for Somnia testnet — 6 decimals, mintable by anyone for demos.
+contract sUSDC is IERC20 {
+    string public constant name = "sUSDC";
+    string public constant symbol = "sUSDC";
     uint8 public constant decimals = 6;
 
     mapping(address => uint256) public balances;

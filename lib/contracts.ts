@@ -1,9 +1,10 @@
 import { createPublicClient, createWalletClient, http, getContract, defineChain } from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
 import {
-  MEZO_RPC_URL,
-  MEZO_CHAIN_ID,
-  MUSD_ADDRESS,
+  SOMNIA_RPC_URL,
+  SOMNIA_CHAIN_ID,
+  SOMNIA_EXPLORER_URL,
+  SUSDC_ADDRESS,
   COMPLIANCE_REGISTRY_ADDRESS,
   PAYROLL_TREASURY_ADDRESS,
   PAYROLL_BATCHER_ADDRESS,
@@ -28,19 +29,25 @@ const Erc20BalanceAbi = [
   },
 ] as const
 
-export const mezoTestnet = defineChain({
-  id: MEZO_CHAIN_ID,
-  name: 'Mezo Testnet',
-  nativeCurrency: { name: 'Bitcoin', symbol: 'BTC', decimals: 18 },
-  rpcUrls: { default: { http: [MEZO_RPC_URL] } },
-  blockExplorers: { default: { name: 'Mezo Explorer', url: 'https://explorer.test.mezo.org' } },
+export const somniaTestnet = defineChain({
+  id: SOMNIA_CHAIN_ID,
+  name: 'Somnia Testnet',
+  nativeCurrency: { name: 'Somnia Test Token', symbol: 'STT', decimals: 18 },
+  rpcUrls: { default: { http: [SOMNIA_RPC_URL] } },
+  blockExplorers: { default: { name: 'Somnia Explorer', url: SOMNIA_EXPLORER_URL } },
 })
 
-export const mezoTransport = http(MEZO_RPC_URL)
+/** @deprecated Use somniaTestnet */
+export const somniaTestnet = somniaTestnet
+
+export const somniaTransport = http(SOMNIA_RPC_URL)
+
+/** @deprecated Use somniaTransport */
+export const mezoTransport = somniaTransport
 
 export const publicClient = createPublicClient({
-  transport: mezoTransport,
-  chain: mezoTestnet,
+  transport: somniaTransport,
+  chain: somniaTestnet,
 })
 
 /**
@@ -71,7 +78,7 @@ export function getServerWalletClient(privateKey: `0x${string}`) {
   const account = privateKeyToAccount(privateKey)
   return createWalletClient({
     account,
-    transport: mezoTransport,
+    transport: somniaTransport,
     chain: publicClient.chain,
   })
 }
@@ -82,14 +89,16 @@ export const treasury = getContract({
   client: publicClient,
 })
 
-export const musdToken = getContract({
-  address: MUSD_ADDRESS as `0x${string}`,
+export const susdcToken = getContract({
+  address: SUSDC_ADDRESS,
   abi: Erc20BalanceAbi,
   client: publicClient,
 })
 
-/** @deprecated Use musdToken */
-export const pathUsdToken = musdToken
+/** @deprecated Use susdcToken */
+export const susdcToken = susdcToken
+/** @deprecated Use susdcToken */
+export const pathUsdToken = susdcToken
 
 export const payrollBatcher = getContract({
   address: PAYROLL_BATCHER_ADDRESS,

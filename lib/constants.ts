@@ -1,15 +1,15 @@
-export const MEZO_CHAIN_ID = 31611
-export const MEZO_RPC_URL = 'https://rpc.test.mezo.org'
-export const MEZO_WS_URL = 'wss://rpc-ws.test.mezo.org'
-export const MEZO_EXPLORER_URL = 'https://explorer.test.mezo.org'
+export const SOMNIA_CHAIN_ID = 50312
+export const SOMNIA_RPC_URL = 'https://dream-rpc.somnia.network/'
+export const SOMNIA_EXPLORER_URL = 'https://shannon-explorer.somnia.network'
 
-/** MUSD on Mezo testnet — https://mezo.org/docs/users/resources/contracts-reference/ */
-export const MUSD_ADDRESS = '0x118917a40FAF1CD7a13dB0Ef56C86De7973Ac503'
+/** Mock USDC on Somnia testnet — deployed via `forge script` (6 decimals). */
+export const SUSDC_ADDRESS = (process.env.NEXT_PUBLIC_SUSDC_ADDRESS ??
+  '0x0000000000000000000000000000000000000000') as `0x${string}`
 
-/** ERC-20 `decimals()` for MUSD on Mezo (matches on-chain token). */
-export const MUSD_DECIMALS = 18
+/** ERC-20 `decimals()` for sUSDC (matches on-chain token). */
+export const SUSDC_DECIMALS = 6
 
-/** Deployed ComplianceRegistry — set after `forge script` on Mezo testnet */
+/** Deployed ComplianceRegistry — set after `forge script` on Somnia testnet */
 export const COMPLIANCE_REGISTRY_ADDRESS = (process.env.NEXT_PUBLIC_COMPLIANCE_REGISTRY ??
   '0x0000000000000000000000000000000000000000') as `0x${string}`
 
@@ -24,13 +24,19 @@ export const STREAM_VESTING_ADDRESS = (process.env.NEXT_PUBLIC_STREAM_VESTING ??
 export const YIELD_ROUTER_ADDRESS = (process.env.NEXT_PUBLIC_YIELD_ROUTER ??
   '0x0000000000000000000000000000000000000000') as `0x${string}`
 
-/** @deprecated Use MEZO_EXPLORER_URL */
-export const TEMPO_EXPLORER_URL = MEZO_EXPLORER_URL
-/** @deprecated Use MUSD_ADDRESS */
-export const PATHUSD_ADDRESS = MUSD_ADDRESS
+/** @deprecated Use SOMNIA_EXPLORER_URL */
+export const MEZO_EXPLORER_URL = SOMNIA_EXPLORER_URL
+/** @deprecated Use SUSDC_ADDRESS */
+export const MUSD_ADDRESS = SUSDC_ADDRESS
+/** @deprecated Use SUSDC_DECIMALS */
+export const MUSD_DECIMALS = SUSDC_DECIMALS
 /** @deprecated Use COMPLIANCE_REGISTRY_ADDRESS */
 export const TIP403_REGISTRY = COMPLIANCE_REGISTRY_ADDRESS
-/** @deprecated Use MEZO_RPC_URL */
-export const TEMPO_RPC_URL = MEZO_RPC_URL
-/** @deprecated Use MEZO_CHAIN_ID */
-export const TEMPO_CHAIN_ID = MEZO_CHAIN_ID
+/** @deprecated Use SOMNIA_RPC_URL */
+export const TEMPO_RPC_URL = SOMNIA_RPC_URL
+/** @deprecated Use SOMNIA_CHAIN_ID */
+export const TEMPO_CHAIN_ID = SOMNIA_CHAIN_ID
+/** @deprecated Use SOMNIA_CHAIN_ID */
+export const MEZO_CHAIN_ID = SOMNIA_CHAIN_ID
+/** @deprecated Use SOMNIA_RPC_URL */
+export const MEZO_RPC_URL = SOMNIA_RPC_URL
