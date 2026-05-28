@@ -1,13 +1,13 @@
-import { MEZO_CHAIN_ID, MUSD_ADDRESS } from '@/lib/constants'
+import { SOMNIA_CHAIN_ID, SUSDC_ADDRESS } from '@/lib/constants'
 
 /**
- * x402 payment configuration for Axios on Mezo testnet.
+ * x402 payment configuration for Axios on Somnia testnet.
  * Route handlers currently use a no-op {@link '@/lib/mpp' | mppx} shim; this object
  * feeds discovery (`/.well-known/x402`) and future `@x402/fetch` client wiring.
  */
 export const x402PaymentConfig = {
-  chainId: MEZO_CHAIN_ID,
-  asset: MUSD_ADDRESS,
+  chainId: SOMNIA_CHAIN_ID,
+  asset: SUSDC_ADDRESS,
   scheme: 'exact' as const,
   treasuryEnvKey: 'AXIOS_TREASURY_ADDRESS' as const,
 }

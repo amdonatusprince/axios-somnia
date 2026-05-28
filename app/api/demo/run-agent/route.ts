@@ -7,7 +7,7 @@ interface AgentLine {
 }
 
 const DEMO_SEQUENCE: AgentLine[] = [
-  { type: 'system',   text: 'Axios Agent v1.0 — connecting to Mezo testnet…',           delay: 0    },
+  { type: 'system',   text: 'Axios Agent v1.0 — connecting to Somnia testnet…',           delay: 0    },
   { type: 'system',   text: 'x402 session opened · maxDeposit: $5.00 · channel: 0xabc…ef12', delay: 400  },
   { type: 'request',  text: 'GET /api/mpp/treasury/yield-rates',                            delay: 900  },
   { type: 'payment',  text: 'Payment: $0.01 · receipt: 0x7f3a…2c81',                        delay: 1300 },

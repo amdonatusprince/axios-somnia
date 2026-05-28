@@ -491,7 +491,7 @@ export default function AddEmployeePage() {
               </div>
               <div className="rounded-xl border border-[var(--border-default)] bg-[var(--bg-base)] p-4">
                 <p className="font-medium text-[var(--text-primary)]">3. Payroll can include them immediately</p>
-                <p className="mt-1">Once the employee completes onboarding, their wallet and compliance status will be ready for Mezo payroll execution.</p>
+                <p className="mt-1">Once the employee completes onboarding, their wallet and compliance status will be ready for Somnia payroll execution.</p>
               </div>
             </div>
           </aside>

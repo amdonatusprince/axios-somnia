@@ -145,7 +145,7 @@ export default function ApiAccessPage() {
     <div className="space-y-8">
       <SectionHeader
         title="API Access"
-        description="Axios exposes machine-payable payroll and treasury endpoints on Mezo via HTTP 402 (x402) for agents, operators, and integrations."
+        description="Axios exposes machine-payable payroll and treasury endpoints on Somnia via HTTP 402 (x402) for agents, operators, and integrations."
       />
 
       <div className="space-y-3">

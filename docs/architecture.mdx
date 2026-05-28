@@ -1,16 +1,16 @@
 ---
 title: "Architecture"
-description: "How employer funding, treasury, payroll, and employees connect on Mezo."
+description: "How employer funding, treasury, payroll, and employees connect on Somnia."
 ---
 
-Axios runs on **Mezo**. Employers fund payroll from **MUSD** held in **PayrollTreasury**; the **PayrollBatcher** releases funds to employee wallets; optional Bridge rails and cards sit on top.
+Axios runs on **Somnia**. Employers fund payroll from **sUSDC** held in **PayrollTreasury**; the **PayrollBatcher** releases funds to employee wallets; optional Bridge rails and cards sit on top.
 
 ```mermaid
 flowchart LR
-    W[Employer wallet] -->|Approve + deposit MUSD| T(PayrollTreasury)
+    W[Employer wallet] -->|Approve + deposit sUSDC| T(PayrollTreasury)
     T -->|Withdraw available| W
     Emp[Employer] -->|Optional: Bridge| B(Virtual account / fiat)
-    B -.->|MUSD| T
+    B -.->|sUSDC| T
     T -->|Execute run| P(PayrollBatcher)
     P -->|ERC-20 transfers| E(Employee wallets)
     E -->|Spend / off-ramp| F(Bridge cards & banks)
@@ -18,7 +18,7 @@ flowchart LR
 
 ## Employer funding
 
-Primary path today: connect an **employer admin** wallet, **approve** MUSD, and **deposit** into `PayrollTreasury`. The contract keys balances by `keccak256(abi.encodePacked(msg.sender))` for the depositing address.
+Primary path today: connect an **employer admin** wallet, **approve** sUSDC, and **deposit** into `PayrollTreasury`. The contract keys balances by `keccak256(abi.encodePacked(msg.sender))` for the depositing address.
 
 Employers can **withdraw** any **available** (non-locked) balance back to the same wallet via `withdraw(uint256)` on the treasury contract.
 
@@ -28,7 +28,7 @@ Holds per-employer **available**, **locked** (in-flight payroll), and **gas budg
 
 ## PayrollBatcher
 
-Coordinates batch payroll: locks funds, transfers MUSD to employees, and attaches memo metadata for compliance and reconciliation.
+Coordinates batch payroll: locks funds, transfers sUSDC to employees, and attaches memo metadata for compliance and reconciliation.
 
 ## Employee wallets and Bridge
 

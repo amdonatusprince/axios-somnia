@@ -3,7 +3,7 @@ import { getPayrollRunById, getPaymentItemsByRunId } from '@/lib/queries/payroll
 import { getEmployerById } from '@/lib/queries/employers'
 import { createServerClient } from '@/lib/supabase-server'
 import { byteaMemoToHex } from '@/lib/memo'
-import { musdToUnits } from '@/lib/musd'
+import { susdcToUnits } from '@/lib/susdc'
 import { getEmployerOnchainIdentity, getEmployerOnchainIdentityError } from '@/lib/employer-onchain'
 
 const DEPLOYER_KEY = (process.env.AXIOS_AGENT_PRIVATE_KEY ??
@@ -71,7 +71,7 @@ export async function POST(req: Request) {
   }
 
   const recipients = items.map((item) => walletMap.get(item.employee_id)! as `0x${string}`)
-  const amounts = items.map((item) => musdToUnits(item.amount))
+  const amounts = items.map((item) => susdcToUnits(item.amount))
   const memos = items.map((item) => byteaMemoToHex(item.memo_bytes))
   if (memos.some((memo) => !memo)) {
     return Response.json(

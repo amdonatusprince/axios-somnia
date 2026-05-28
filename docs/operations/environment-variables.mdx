@@ -1,6 +1,6 @@
 ---
 title: "Environment Variables"
-description: "Server and client configuration for Axios on Mezo."
+description: "Server and client configuration for Axios on Somnia."
 ---
 
 Configure network, Supabase, session auth, and deployed contract addresses. **Never** expose server-only variables to the browser.
@@ -10,9 +10,9 @@ Configure network, Supabase, session auth, and deployed contract addresses. **Ne
 | Variable | Description |
 |----------|-------------|
 | `NEXT_PUBLIC_APP_URL` | Public origin (e.g. `https://axios.xyz` or `http://localhost:3002`). |
-| `NEXT_PUBLIC_MEZO_RPC` | Mezo testnet RPC (default `https://rpc.test.mezo.org`). |
-| `NEXT_PUBLIC_MEZO_CHAIN_ID` | `31611` for Mezo testnet. |
-| `NEXT_PUBLIC_MUSD_ADDRESS` | MUSD ERC-20 address on Mezo. |
+| `NEXT_PUBLIC_SOMNIA_RPC` | Somnia testnet RPC (default `https://dream-rpc.somnia.network/`). |
+| `NEXT_PUBLIC_SOMNIA_CHAIN_ID` | `50312` for Somnia testnet. |
+| `NEXT_PUBLIC_SUSDC_ADDRESS` | sUSDC ERC-20 address on Somnia. |
 | `NEXT_PUBLIC_COMPLIANCE_REGISTRY` | Deployed ComplianceRegistry. |
 | `NEXT_PUBLIC_PAYROLL_TREASURY` | Deployed PayrollTreasury. |
 | `NEXT_PUBLIC_PAYROLL_BATCHER` | Deployed PayrollBatcher. |
@@ -43,6 +43,6 @@ Configure network, Supabase, session auth, and deployed contract addresses. **Ne
 
 | Variable | Description |
 |----------|-------------|
-| `DEPLOYER_PRIVATE_KEY` | Used only for `forge script` deploys to Mezo. |
+| `DEPLOYER_PRIVATE_KEY` | Used only for `forge script` deploys to Somnia. |
 
 Copy **`.env.local.example`** to **`.env.local`** and fill values. See [Contract deployment](/docs/operations/contract-deployment) after changing contracts.

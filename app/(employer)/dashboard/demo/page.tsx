@@ -4,7 +4,7 @@ import * as React from 'react'
 import { motion } from 'framer-motion'
 import { Terminal, Zap, DollarSign, Users, TrendingUp } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { MEZO_CHAIN_ID } from '@/lib/constants'
+import { SOMNIA_CHAIN_ID } from '@/lib/constants'
 import { StreamingBalanceTicker } from '@/components/treasury/StreamingBalanceTicker'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -240,12 +240,12 @@ export default function DemoPage() {
             Live Demo
           </h1>
           <p className="text-xs text-[var(--text-muted)] mt-0.5">
-            Autonomous AI payroll agent · HTTP/402 machine-to-machine payments · Mezo testnet
+            Autonomous AI payroll agent · HTTP/402 machine-to-machine payments · Somnia testnet
           </p>
         </div>
         <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--accent)]/10 border border-[var(--accent)]/20">
           <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent)] animate-ping" />
-          <span className="text-xs font-medium text-[var(--accent)]">Mezo testnet · Chain {MEZO_CHAIN_ID}</span>
+          <span className="text-xs font-medium text-[var(--accent)]">Somnia testnet · Chain {SOMNIA_CHAIN_ID}</span>
         </div>
       </div>
 
@@ -276,7 +276,7 @@ export default function DemoPage() {
           <StatCard
             label="Treasury Balance"
             value={DEMO_TREASURY_BALANCE}
-            sub="Available on-chain · MUSD (ERC-20)"
+            sub="Available on-chain · sUSDC (ERC-20)"
             icon={<DollarSign className="h-3.5 w-3.5 text-[var(--accent)]" />}
             accent
           />
@@ -295,7 +295,7 @@ export default function DemoPage() {
               className="text-xl font-bold"
             />
             <p className="text-xs text-[var(--text-muted)]">
-              +$0.003170/sec · StreamVesting contract · Mezo testnet
+              +$0.003170/sec · StreamVesting contract · Somnia testnet
             </p>
           </div>
 
@@ -331,7 +331,7 @@ export default function DemoPage() {
 
           {/* x402 session summary */}
           <div className="rounded-xl border border-[var(--border-default)] bg-[var(--bg-surface)] p-4 space-y-2">
-            <p className="text-xs font-medium text-[var(--text-muted)]">x402 session (Mezo)</p>
+            <p className="text-xs font-medium text-[var(--text-muted)]">x402 session (Somnia)</p>
             <div className="space-y-1.5">
               {[
                 { label: 'Yield rates query',     cost: '$0.01' },
@@ -356,7 +356,7 @@ export default function DemoPage() {
           <StatCard
             label="Yield Earned (Mar)"
             value="$184.50"
-            sub="3.7% APY · YieldRouter · MUSD strategy"
+            sub="3.7% APY · YieldRouter · sUSDC strategy"
             icon={<TrendingUp className="h-3.5 w-3.5 text-[var(--accent)]" />}
           />
         </motion.div>

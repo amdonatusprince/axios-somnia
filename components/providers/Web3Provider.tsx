@@ -3,7 +3,7 @@
 import * as React from 'react'
 import { WagmiProvider } from 'wagmi'
 import { RainbowKitProvider, darkTheme } from '@rainbow-me/rainbowkit'
-import { wagmiConfig, mezoTestnet } from '@/lib/wagmi'
+import { wagmiConfig, somniaTestnet } from '@/lib/wagmi'
 
 /**
  * WalletConnect uses indexedDB (browser-only). Next still pre-renders client components on
@@ -23,7 +23,7 @@ export function Web3Provider({ children }: { children: React.ReactNode }) {
 
   return (
     <WagmiProvider config={wagmiConfig}>
-      <RainbowKitProvider theme={darkTheme()} initialChain={mezoTestnet}>
+      <RainbowKitProvider theme={darkTheme()} initialChain={somniaTestnet}>
         {children}
       </RainbowKitProvider>
     </WagmiProvider>

@@ -337,7 +337,7 @@ export default function DashboardPage() {
             ) : (
               <EmptyPanel
                 title="No payroll runs yet"
-                body="Once your first payroll batch is prepared and submitted, recent runs will show up here with Mezo settlement details."
+                body="Once your first payroll batch is prepared and submitted, recent runs will show up here with Somnia settlement details."
                 ctaHref="/dashboard/payroll/new"
                 ctaLabel="Create first payroll"
               />

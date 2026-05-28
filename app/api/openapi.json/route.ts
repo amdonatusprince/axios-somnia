@@ -6,9 +6,9 @@ const spec = {
     title: 'Axios Payroll API',
     version: '1.0.0',
     description:
-      'Axios: Mezo testnet payroll as machine-payable HTTP APIs. x402 payment gateway — see GET /.well-known/x402 for MUSD (chain 31611) and treasury recipient; /api/mpp/* routes implement pay-per-call payroll, compliance, and treasury actions (HTTP 402).',
+      'Axios: Somnia testnet payroll as machine-payable HTTP APIs. x402 payment gateway — see GET /.well-known/x402 for sUSDC (chain 50312) and treasury recipient; /api/mpp/* routes implement pay-per-call payroll, compliance, and treasury actions (HTTP 402).',
     'x-guidance':
-      'Discovery: GET /.well-known/x402 (x402 gateway — scheme, network eip155:31611, MUSD asset). Paid routes: /api/mpp/* with HTTP 402 + MUSD on Mezo testnet. Example: GET /api/mpp/treasury/yield-rates ($0.01 priced), POST /api/mpp/payroll/execute ($1.00 priced). Wire client payments via x402/fetch when enabled; shim may be no-op in dev.',
+      'Discovery: GET /.well-known/x402 (x402 gateway — scheme, network eip155:50312, sUSDC asset). Paid routes: /api/mpp/* with HTTP 402 + sUSDC on Somnia testnet. Example: GET /api/mpp/treasury/yield-rates ($0.01 priced), POST /api/mpp/payroll/execute ($1.00 priced). Wire client payments via x402/fetch when enabled; shim may be no-op in dev.',
   },
   'x-discovery': {
     ownershipProofs: [
@@ -40,7 +40,7 @@ const spec = {
             in: 'query',
             required: false,
             schema: { type: 'string' },
-            description: 'Optional token address filter (defaults to MUSD)',
+            description: 'Optional token address filter (defaults to sUSDC)',
           },
         ],
         'x-payment-info': {

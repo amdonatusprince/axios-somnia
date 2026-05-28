@@ -6,7 +6,7 @@ import { ChevronLeft, ExternalLink } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useEmployer } from '@/lib/hooks/useEmployer'
 import { usePrivyAuthedFetch } from '@/lib/hooks/usePrivyAuthedFetch'
-import { MEZO_EXPLORER_URL } from '@/lib/constants'
+import { SOMNIA_EXPLORER_URL } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 
 type PaymentLine = {
@@ -113,7 +113,7 @@ export default function PayrollRunDetailsPage({ params }: { params: Promise<{ ru
               </span>
               {data.run.tx_hash && (
                 <a
-                  href={`${MEZO_EXPLORER_URL}/tx/${data.run.tx_hash}`}
+                  href={`${SOMNIA_EXPLORER_URL}/tx/${data.run.tx_hash}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1 text-xs font-mono text-[var(--accent)] hover:underline"
@@ -199,7 +199,7 @@ export default function PayrollRunDetailsPage({ params }: { params: Promise<{ ru
           </div>
 
           <p className="text-xs text-[var(--text-muted)]">
-            Amounts are stored and displayed in USD; on-chain settlement uses MUSD (18 decimals).
+            Amounts are stored and displayed in USD; on-chain settlement uses sUSDC (18 decimals).
           </p>
         </div>
       ) : null}

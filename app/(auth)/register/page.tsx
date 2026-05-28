@@ -149,7 +149,7 @@ export default function RegisterPage() {
           transition={{ duration: 0.4, delay: 0.4 }}
           className="relative z-10"
         >
-          <p className="text-xs text-[var(--text-muted)]">Powered by Mezo · MUSD · ComplianceRegistry</p>
+          <p className="text-xs text-[var(--text-muted)]">Powered by Somnia · sUSDC · ComplianceRegistry</p>
         </motion.div>
       </div>
 

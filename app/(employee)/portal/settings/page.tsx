@@ -218,8 +218,8 @@ export default function SettingsPage() {
           value={formatMoney(balance?.payroll_received_usd ?? 0)}
         />
         <ReadOnlyField
-          label="MUSD in payroll wallet"
-          value={formatMoney(balance?.wallet_musd_usd ?? balance?.available_usd ?? 0)}
+          label="sUSDC in payroll wallet"
+          value={formatMoney(balance?.wallet_susdc_usd ?? balance?.available_usd ?? 0)}
         />
       </Section>
 
@@ -268,7 +268,7 @@ export default function SettingsPage() {
           label="Wallet"
           value={address ? `${address.slice(0, 6)}…${address.slice(-4)}` : 'Connect wallet from login'}
         />
-        <ReadOnlyField label="Sign-in" value="Mezo Passport (SIWE)" />
+        <ReadOnlyField label="Sign-in" value="SIWE wallet (SIWE)" />
 
         <div className="border-t border-[var(--border-default)] px-5 py-3.5">
           <p className="text-sm font-medium text-[var(--text-primary)]">Current session</p>

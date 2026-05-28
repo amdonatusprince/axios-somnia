@@ -1,7 +1,7 @@
 # Axios
 
 
-Axios is a borderless enterprise payroll on Mezo testnet with x402 integrated machine payments
+Axios is a borderless enterprise payroll on Somnia testnet with x402 integrated machine payments
 
 ## What it does
 
@@ -11,12 +11,12 @@ Axios runs payroll through Foundry-deployed contracts (`PayrollTreasury`, `Payro
 
 | Layer | Technology |
 |-------|-----------|
-| Chain | Mezo testnet (chain ID **31611**) |
-| Stablecoin | MUSD (`0x118917a40FAF1CD7a13dB0Ef56C86De7973Ac503`) |
+| Chain | Somnia testnet (chain ID **50312**) |
+| Stablecoin | sUSDC (`0x118917a40FAF1CD7a13dB0Ef56C86De7973Ac503`) |
 | Compliance | `ComplianceRegistry` (owner-managed allow/block) |
 | Machine payments | MPP route handlers + `/.well-known/x402` discovery |
 | Fiat rails | Stripe Bridge API (where enabled) |
-| Wallets | RainbowKit + wagmi + viem (Mezo testnet); `@mezo-org/passport` removed for Next 15 / webpack compatibility |
+| Wallets | RainbowKit + wagmi + viem (Somnia testnet); `@mezo-org/passport` removed for Next 15 / webpack compatibility |
 | Agent signing | Vincent / Lit Protocol PKPs (optional) |
 | Frontend | Next.js 15 App Router, TypeScript, Tailwind, shadcn/ui |
 | Database | Supabase (PostgreSQL, RLS) |
@@ -28,15 +28,15 @@ See route files under `app/api/mpp/`. Charges are defined in comments per route;
 
 ## Smart contracts
 
-Deploy with Foundry from `contracts/` (set `DEPLOYER_PRIVATE_KEY`, use Mezo RPC). After deploy, copy addresses into `.env.local`.
+Deploy with Foundry from `contracts/` (set `DEPLOYER_PRIVATE_KEY`, use Somnia RPC). After deploy, copy addresses into `.env.local`.
 
 ```bash
 cd contracts
 forge build
-forge script script/Deploy.s.sol --broadcast --rpc-url https://rpc.test.mezo.org
+forge script script/Deploy.s.sol --broadcast --rpc-url https://dream-rpc.somnia.network/
 ```
 
-Use the [Mezo faucet](https://faucet.test.mezo.org/) for testnet BTC (gas).
+Use the [Somnia faucet](https://testnet.somnia.network/) for testnet STT (gas).
 
 ## Local development
 
@@ -70,9 +70,9 @@ See `VINCENT_SETUP.md` for the full setup flow.
 | Variable | Description |
 |----------|-------------|
 | `NEXT_PUBLIC_APP_URL` | Public app origin. |
-| `NEXT_PUBLIC_MEZO_RPC` | Mezo testnet RPC (defaults in `lib/constants.ts` if unset). |
-| `NEXT_PUBLIC_MEZO_CHAIN_ID` | `31611` for testnet. |
-| `NEXT_PUBLIC_MUSD_ADDRESS` | MUSD token address. |
+| `NEXT_PUBLIC_SOMNIA_RPC` | Somnia testnet RPC (defaults in `lib/constants.ts` if unset). |
+| `NEXT_PUBLIC_SOMNIA_CHAIN_ID` | `50312` for testnet. |
+| `NEXT_PUBLIC_SUSDC_ADDRESS` | sUSDC token address. |
 | `NEXT_PUBLIC_COMPLIANCE_REGISTRY` | Deployed ComplianceRegistry. |
 | `NEXT_PUBLIC_PAYROLL_*` | Deployed protocol contract addresses. |
 | `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase client. |

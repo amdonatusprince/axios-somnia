@@ -115,12 +115,12 @@ export function PublicFooter() {
             <p className="text-xs text-white/20">© 2026 Axios, Inc.</p>
             <div className="flex flex-wrap items-center justify-center gap-2 lg:justify-start">
               <a
-                href="https://mezo.org"
+                href="https://somnia.network"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-[11px] font-medium uppercase tracking-[0.14em] text-white/45 transition-colors hover:border-white/20 hover:text-white/70"
               >
-                Built on Mezo
+                Built on Somnia
               </a>
               <a
                 href="https://docs.axios.xyz/docs/mpp-api/overview"

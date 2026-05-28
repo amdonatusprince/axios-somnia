@@ -9,7 +9,7 @@ import { WalletStatusPanel } from '@/components/wallet/WalletStatusPanel'
 import { Button } from '@/components/ui/button'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { useEmployee, useEmployeeBalance, useEmployerForEmployee } from '@/lib/hooks/useEmployee'
-import { MEZO_EXPLORER_URL } from '@/lib/constants'
+import { SOMNIA_EXPLORER_URL } from '@/lib/constants'
 
 function formatCurrency(value: number) {
   return new Intl.NumberFormat('en-US', {
@@ -35,7 +35,7 @@ export default function WalletPage() {
     <div className="mx-auto max-w-[640px] space-y-6 px-4 pb-24 pt-6">
       <SectionHeader
         title="Wallet"
-        description="Your Mezo wallet is where Axios salary funding, streaming accrual, and card spend authorization are anchored."
+        description="Your Somnia wallet is where Axios salary funding, streaming accrual, and card spend authorization are anchored."
       />
 
       <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--bg-surface)] p-5">
@@ -50,9 +50,9 @@ export default function WalletPage() {
             </p>
           </div>
           <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--bg-base)] p-4">
-            <p className="text-xs uppercase tracking-[0.14em] text-[var(--text-muted)]">MUSD in payroll wallet</p>
+            <p className="text-xs uppercase tracking-[0.14em] text-[var(--text-muted)]">sUSDC in payroll wallet</p>
             <p className="mt-2 text-2xl font-semibold text-[var(--text-primary)]">
-              {formatCurrency(balance?.wallet_musd_usd ?? balance?.available_usd ?? 0)}
+              {formatCurrency(balance?.wallet_susdc_usd ?? balance?.available_usd ?? 0)}
             </p>
             <p className="mt-2 text-xs leading-relaxed text-[var(--text-muted)]">
               On-chain balance of your saved employee wallet (may differ if you moved funds).
@@ -99,8 +99,8 @@ export default function WalletPage() {
 
         {employee?.wallet_address ? (
           <Button asChild variant="outline" className="mt-5 w-full">
-            <a href={`${MEZO_EXPLORER_URL}/address/${employee.wallet_address}`} target="_blank" rel="noreferrer">
-              View on Mezo Explorer
+            <a href={`${SOMNIA_EXPLORER_URL}/address/${employee.wallet_address}`} target="_blank" rel="noreferrer">
+              View on Somnia Explorer
               <ArrowUpRight className="h-4 w-4" />
             </a>
           </Button>

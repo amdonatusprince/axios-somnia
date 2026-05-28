@@ -3,9 +3,9 @@ title: "Payroll Batcher"
 description: "High-throughput parallel transaction execution for batched salary distribution."
 ---
 
-The `PayrollBatcher` handles the transactional heavy lifting when an employer processes a periodic payroll cycle for their entire team on **Mezo testnet**.
+The `PayrollBatcher` handles the transactional heavy lifting when an employer processes a periodic payroll cycle for their entire team on **Somnia testnet**.
 
-It coordinates bulk **MUSD** transfers in one flow: lock funds in **PayrollTreasury**, pay each recipient, and attach **32-byte memos** for reconciliation.
+It coordinates bulk **sUSDC** transfers in one flow: lock funds in **PayrollTreasury**, pay each recipient, and attach **32-byte memos** for reconciliation.
 
 ```mermaid
 flowchart TD
@@ -29,7 +29,7 @@ When triggered (either manually via the dashboard or programmatically by an AI a
 2. `amounts`: The exact stablecoin amount each employee is owed for the given cycle.
 3. `memos`: A matching array of 32-byte payloads for each transfer.
 
-The contract loops through the arrays to issue **ERC-20** MUSD transfers from the treasury’s locked balance. Gas and finality follow **Mezo** network behavior on testnet.
+The contract loops through the arrays to issue **ERC-20** sUSDC transfers from the treasury’s locked balance. Gas and finality follow **Somnia** network behavior on testnet.
 
 ### Agent Authorization Boundaries
 

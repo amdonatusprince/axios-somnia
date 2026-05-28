@@ -85,7 +85,7 @@ async function mppFetch(
 }
 
 async function step1_openSession(): Promise<void> {
-  log(1, 'Demo session (Axios / Mezo testnet)', {
+  log(1, 'Demo session (Axios / Somnia testnet)', {
     agent: 'Axios Treasury Agent v1.0',
     max_deposit_usd: 5.0,
     employer_id: DEMO_EMPLOYER_ID,
@@ -111,13 +111,13 @@ async function step1b_vincentSigning(): Promise<void> {
   try {
     const { createPublicClient, http } = await import('viem')
     const { defineChain } = await import('viem')
-    const mezoTestnet = defineChain({
-      id: 31611,
-      name: 'Mezo Testnet',
+    const somniaTestnet = defineChain({
+      id: 50312,
+      name: 'Somnia Testnet',
       nativeCurrency: { name: 'Bitcoin', symbol: 'BTC', decimals: 18 },
-      rpcUrls: { default: { http: ['https://rpc.test.mezo.org'] } },
+      rpcUrls: { default: { http: ['https://dream-rpc.somnia.network/'] } },
     })
-    const publicClient = createPublicClient({ chain: mezoTestnet, transport: http() })
+    const publicClient = createPublicClient({ chain: somniaTestnet, transport: http() })
 
     const nonce = await publicClient.getTransactionCount({ address: pkpAddress })
     const gasPrice = await publicClient.getGasPrice()
@@ -127,7 +127,7 @@ async function step1b_vincentSigning(): Promise<void> {
       to: pkpAddress, // self-send
       value: 0n,
       data: '0x',
-      chainId: 31611,
+      chainId: 50312,
       nonce,
       gasLimit: 300000n,
       maxFeePerGas: gasPrice,
@@ -140,7 +140,7 @@ async function step1b_vincentSigning(): Promise<void> {
     const { ethers } = await import('ethers')
     const parsed = ethers.utils.parseTransaction(signedTx)
 
-    console.log('  Broadcasting to Mezo testnet...')
+    console.log('  Broadcasting to Somnia testnet...')
     const txHash = await publicClient.sendRawTransaction({ serializedTransaction: signedTx as `0x${string}` })
 
     const timestamp = new Date().toISOString()
@@ -150,8 +150,8 @@ async function step1b_vincentSigning(): Promise<void> {
       signer_recovered: parsed.from,
       address_match: parsed.from?.toLowerCase() === pkpAddress.toLowerCase(),
       tx_hash: txHash,
-      explorer: `https://explorer.test.mezo.org/tx/${txHash}`,
-      chain: 'Mezo testnet (chainId 31611)',
+      explorer: `https://shannon-explorer.somnia.network/tx/${txHash}`,
+      chain: 'Somnia testnet (chainId 50312)',
       signing_network: 'Lit Chipotle (api.dev.litprotocol.com)',
       note: 'PKP private key never left the Lit TEE enclave',
     }, null, 2))
@@ -213,7 +213,7 @@ async function step5_executePayroll(): Promise<void> {
     body: JSON.stringify({ payrollRunId: DEMO_PAYROLL_RUN_ID }),
   })
   log(5, 'Payroll Execution', data)
-  console.log('  ✓ $1.00 (priced). PayrollBatcher.executeBatchPayroll() submitted on Mezo testnet when live.')
+  console.log('  ✓ $1.00 (priced). PayrollBatcher.executeBatchPayroll() submitted on Somnia testnet when live.')
 }
 
 async function step6_streamSalary(): Promise<void> {
@@ -282,7 +282,7 @@ async function step7_closeSession(): Promise<void> {
   console.log('  DEMO COMPLETE — Autonomous AI Treasury Agent ran in ~60s')
   console.log('  Total MPP payments: $' + totalSpent.toFixed(2))
   console.log('  Chain: Tempo Moderato (ID: 42431)')
-  console.log('  Token: MUSD (ERC-20 on Mezo testnet)')
+  console.log('  Token: sUSDC (ERC-20 on Somnia testnet)')
   console.log('─'.repeat(60) + '\n')
 }
 

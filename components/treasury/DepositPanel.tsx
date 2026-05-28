@@ -151,8 +151,8 @@ export function DepositPanel({
 
       <p className="text-xs text-[var(--text-muted)]">
         {tab === 'bank'
-          ? 'Funds convert to MUSD automatically on receipt. Typical settlement: same business day.'
-          : 'Crypto deposits settle on Mezo immediately and can be used in payroll as soon as they confirm.'}
+          ? 'Funds convert to sUSDC automatically on receipt. Typical settlement: same business day.'
+          : 'Crypto deposits settle on Somnia immediately and can be used in payroll as soon as they confirm.'}
       </p>
     </div>
   )

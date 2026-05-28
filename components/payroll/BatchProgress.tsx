@@ -3,7 +3,7 @@
 import * as React from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { CheckCircle, XCircle, Loader2 } from 'lucide-react'
-import { MEZO_EXPLORER_URL } from '@/lib/constants'
+import { SOMNIA_EXPLORER_URL } from '@/lib/constants'
 
 export type BatchStatus = 'idle' | 'signing' | 'submitting' | 'confirming' | 'success' | 'error'
 
@@ -18,7 +18,7 @@ interface BatchProgressProps {
 
 const STEPS: Array<{ key: BatchStatus; label: string }> = [
   { key: 'signing', label: 'Signing transaction' },
-  { key: 'submitting', label: 'Broadcasting to Mezo' },
+  { key: 'submitting', label: 'Broadcasting to Somnia' },
   { key: 'confirming', label: 'Confirming on-chain' },
   { key: 'success', label: 'Payroll complete' },
 ]
@@ -142,7 +142,7 @@ export function BatchProgress({
             )}
             {txHash && (
               <a
-                href={`${MEZO_EXPLORER_URL}/tx/${txHash}`}
+                href={`${SOMNIA_EXPLORER_URL}/tx/${txHash}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block font-mono text-xs text-[var(--accent)] hover:underline"

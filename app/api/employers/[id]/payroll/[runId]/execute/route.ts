@@ -3,7 +3,7 @@ import { privateKeyToAccount } from 'viem/accounts'
 import { createServerClient } from '@/lib/supabase-server'
 import { getAuthorizedEmployer, getEmployerOnchainIdentityForRequest } from '@/lib/auth'
 import { payrollBatcher, publicClient, getServerWalletClient, getAgentPrivateKeyFromEnv } from '@/lib/contracts'
-import { musdToUnits } from '@/lib/musd'
+import { susdcToUnits } from '@/lib/susdc'
 import { getEmployerOnchainIdentityError } from '@/lib/employer-onchain'
 import { byteaMemoToHex } from '@/lib/memo'
 
@@ -74,7 +74,7 @@ export async function POST(req: NextRequest, ctx: RouteContext) {
   }
 
   const recipients = items.map((i) => walletMap.get(i.employee_id)! as `0x${string}`)
-  const amounts = items.map((i) => musdToUnits(i.amount))
+  const amounts = items.map((i) => susdcToUnits(i.amount))
   const memos = items.map((i) => byteaMemoToHex(i.memo_bytes))
 
   if (memos.some((m) => !m)) {

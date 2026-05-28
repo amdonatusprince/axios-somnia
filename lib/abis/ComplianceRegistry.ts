@@ -1,4 +1,4 @@
-// ComplianceRegistry.sol — replaces Tempo TIP-403 precompile for Mezo
+// ComplianceRegistry.sol — replaces Tempo TIP-403 precompile for Somnia
 
 export const ComplianceRegistryABI = [
   {

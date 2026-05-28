@@ -17,7 +17,7 @@ export default function TreasuryDepositPage() {
     <div className="space-y-6">
       <SectionHeader
         title="Deposit Treasury Funds"
-        description="Deposit MUSD from your wallet into PayrollTreasury so payroll can execute."
+        description="Deposit sUSDC from your wallet into PayrollTreasury so payroll can execute."
         action={
           <Button asChild variant="outline">
             <Link href="/dashboard/treasury">
@@ -37,7 +37,7 @@ export default function TreasuryDepositPage() {
               <h2 className="text-sm font-semibold text-[var(--text-primary)]">Deposit from wallet</h2>
             </div>
             <p className="text-sm leading-6 text-[var(--text-secondary)] mb-5">
-              Approve and deposit MUSD into the PayrollTreasury contract in two transactions. Funds credit the connected wallet’s employer balance and are available for payroll after confirmation.
+              Approve and deposit sUSDC into the PayrollTreasury contract in two transactions. Funds credit the connected wallet’s employer balance and are available for payroll after confirmation.
             </p>
             {employer ? (
               <OnChainDepositWidget employer={employer} />
@@ -52,7 +52,7 @@ export default function TreasuryDepositPage() {
               <h2 className="text-sm font-semibold text-[var(--text-primary)]">Withdraw to wallet</h2>
             </div>
             <p className="text-sm leading-6 text-[var(--text-secondary)] mb-5">
-              Move available MUSD from PayrollTreasury back to your connected employer wallet. Does not require an
+              Move available sUSDC from PayrollTreasury back to your connected employer wallet. Does not require an
               approval step — one transaction.
             </p>
             {employer ? (

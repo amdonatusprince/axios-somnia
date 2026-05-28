@@ -7,9 +7,9 @@ import { encodeFunctionData } from 'viem'
 import { Loader2, ArrowRight, CheckCircle2, AlertCircle, Wallet } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { publicClient } from '@/lib/contracts'
-import { mezoTestnet } from '@/lib/wagmi'
-import { MEZO_EXPLORER_URL, MUSD_ADDRESS, PAYROLL_TREASURY_ADDRESS } from '@/lib/constants'
-import { formatMusdUnits, musdToUnits } from '@/lib/musd'
+import { somniaTestnet } from '@/lib/wagmi'
+import { SOMNIA_EXPLORER_URL, SUSDC_ADDRESS, PAYROLL_TREASURY_ADDRESS } from '@/lib/constants'
+import { formatSusdcUnits, susdcToUnits } from '@/lib/susdc'
 import { PayrollTreasuryABI } from '@/lib/abis/PayrollTreasury'
 import type { Database } from '@/lib/database.types'
 
@@ -43,7 +43,7 @@ interface Props {
 
 export function OnChainDepositWidget({ employer }: Props) {
   const { address, isConnected } = useAccount()
-  const { data: walletClient } = useWalletClient({ chainId: mezoTestnet.id })
+  const { data: walletClient } = useWalletClient({ chainId: somniaTestnet.id })
   const queryClient = useQueryClient()
 
   const [amount, setAmount] = React.useState('')
@@ -64,7 +64,7 @@ export function OnChainDepositWidget({ employer }: Props) {
     let cancelled = false
     publicClient
       .readContract({
-        address: MUSD_ADDRESS,
+        address: SUSDC_ADDRESS,
         abi: ERC20_ABI,
         functionName: 'balanceOf',
         args: [signerAddress],
@@ -87,14 +87,14 @@ export function OnChainDepositWidget({ employer }: Props) {
 
     let amountWei: bigint
     try {
-      amountWei = musdToUnits(trimmed)
+      amountWei = susdcToUnits(trimmed)
     } catch {
       setError('Enter a valid amount (e.g. 100 or 99.50).')
       return
     }
     if (amountWei <= 0n) return
     if (walletBalance !== null && amountWei > walletBalance) {
-      setError('Insufficient MUSD balance in this wallet.')
+      setError('Insufficient sUSDC balance in this wallet.')
       return
     }
 
@@ -112,8 +112,8 @@ export function OnChainDepositWidget({ employer }: Props) {
       })
       const approveHash = await walletClient.sendTransaction({
         account: signerAddress,
-        chain: mezoTestnet,
-        to: MUSD_ADDRESS,
+        chain: somniaTestnet,
+        to: SUSDC_ADDRESS,
         data: approveData,
       })
       setApproveTx(approveHash)
@@ -127,7 +127,7 @@ export function OnChainDepositWidget({ employer }: Props) {
       })
       const depositHash = await walletClient.sendTransaction({
         account: signerAddress,
-        chain: mezoTestnet,
+        chain: somniaTestnet,
         to: PAYROLL_TREASURY_ADDRESS,
         data: depositData,
       })
@@ -149,7 +149,7 @@ export function OnChainDepositWidget({ employer }: Props) {
     const t = amount.trim()
     if (!t) return null
     try {
-      const w = musdToUnits(t)
+      const w = susdcToUnits(t)
       return w > 0n ? w : null
     } catch {
       return null
@@ -157,7 +157,7 @@ export function OnChainDepositWidget({ employer }: Props) {
   }, [amount])
 
   const walletBalanceUsdStr =
-    walletBalance !== null ? formatMusdUnits(walletBalance) : null
+    walletBalance !== null ? formatSusdcUnits(walletBalance) : null
   const hasInsufficientBalance =
     walletBalance !== null &&
     amountWeiParsed !== null &&
@@ -178,12 +178,12 @@ export function OnChainDepositWidget({ employer }: Props) {
           <p className="text-sm font-medium text-[var(--text-primary)]">Deposit confirmed</p>
           <p className="text-xs text-[var(--text-muted)]">
             {lastDepositWei != null
-              ? `${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 18 }).format(Number(formatMusdUnits(lastDepositWei)))} MUSD deposited. Your payroll balance will update shortly.`
+              ? `${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 18 }).format(Number(formatSusdcUnits(lastDepositWei)))} sUSDC deposited. Your payroll balance will update shortly.`
               : 'Deposit confirmed. Your payroll balance will update shortly.'}
           </p>
           {depositTx && (
             <a
-              href={`${MEZO_EXPLORER_URL}/tx/${depositTx}`}
+              href={`${SOMNIA_EXPLORER_URL}/tx/${depositTx}`}
               target="_blank"
               rel="noopener noreferrer"
               className="block text-xs text-[var(--accent)] hover:underline"
@@ -220,13 +220,13 @@ export function OnChainDepositWidget({ employer }: Props) {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 18,
               }).format(Number(walletBalanceUsdStr))}{' '}
-              MUSD
+              sUSDC
             </span>
           )}
         </div>
       ) : (
         <div className="px-3 py-2 rounded-lg bg-[var(--bg-subtle)] text-xs text-[var(--text-muted)]">
-          Connect your Mezo wallet to deposit MUSD into treasury.
+          Connect your Somnia wallet to deposit sUSDC into treasury.
         </div>
       )}
 
@@ -243,7 +243,7 @@ export function OnChainDepositWidget({ employer }: Props) {
       )}
 
       <div className="space-y-1.5">
-        <label className="text-xs text-[var(--text-muted)]">Amount (MUSD)</label>
+        <label className="text-xs text-[var(--text-muted)]">Amount (sUSDC)</label>
         <div
           className={cn(
             'flex items-center gap-2 h-10 px-3 rounded-lg border bg-[var(--bg-base)] transition-colors',
@@ -262,7 +262,7 @@ export function OnChainDepositWidget({ employer }: Props) {
             disabled={isLoading}
             className="flex-1 bg-transparent text-sm text-[var(--text-primary)] focus:outline-none min-w-0"
           />
-          <span className="text-xs text-[var(--text-muted)] shrink-0">MUSD</span>
+          <span className="text-xs text-[var(--text-muted)] shrink-0">sUSDC</span>
         </div>
         {hasInsufficientBalance && walletBalanceUsdStr !== null && (
           <p className="text-xs text-[var(--status-error)]">
@@ -270,7 +270,7 @@ export function OnChainDepositWidget({ employer }: Props) {
             {new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 18 }).format(
               Number(walletBalanceUsdStr),
             )}{' '}
-            MUSD available)
+            sUSDC available)
           </p>
         )}
       </div>
@@ -279,7 +279,7 @@ export function OnChainDepositWidget({ employer }: Props) {
         <div className="space-y-2 rounded-lg border border-[var(--border-default)] bg-[var(--bg-subtle)] p-3">
           <DepositStep
             index={1}
-            label="Approve MUSD"
+            label="Approve sUSDC"
             sublabel="Allow treasury contract to spend your tokens"
             done={Boolean(approveTx)}
             active={status === 'approving'}
@@ -376,7 +376,7 @@ function DepositStep({
         <p className="text-[11px] text-[var(--text-muted)]">{sublabel}</p>
         {txHash && (
           <a
-            href={`${MEZO_EXPLORER_URL}/tx/${txHash}`}
+            href={`${SOMNIA_EXPLORER_URL}/tx/${txHash}`}
             target="_blank"
             rel="noopener noreferrer"
             className="text-[10px] font-mono text-[var(--accent)] hover:underline"

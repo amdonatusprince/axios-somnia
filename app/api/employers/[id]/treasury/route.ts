@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getAuthorizedEmployer, getEmployerOnchainIdentityForRequest } from '@/lib/auth'
 import { treasury } from '@/lib/contracts'
 import { getEmployerOnchainIdentityError } from '@/lib/employer-onchain'
-import { MUSD_DECIMALS } from '@/lib/constants'
+import { SUSDC_DECIMALS } from '@/lib/constants'
 
 type RouteContext = { params: Promise<{ id: string }> }
 
@@ -28,7 +28,7 @@ export async function GET(req: NextRequest, ctx: RouteContext) {
     treasury.read.getLockedBalance([onchainIdentity.employerAccountId]) as Promise<bigint>,
   ])
 
-  const scale = 10 ** MUSD_DECIMALS
+  const scale = 10 ** SUSDC_DECIMALS
   const availableUsd = Number(available) / scale
   const lockedUsd = Number(locked) / scale
 

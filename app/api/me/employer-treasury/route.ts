@@ -3,7 +3,7 @@ import { requireEmployeeSession } from '@/lib/auth'
 import { createServerClient } from '@/lib/supabase-server'
 import { treasury } from '@/lib/contracts'
 import { getEmployerOnchainIdentity, getEmployerOnchainIdentityError } from '@/lib/employer-onchain'
-import { MUSD_DECIMALS } from '@/lib/constants'
+import { SUSDC_DECIMALS } from '@/lib/constants'
 
 /**
  * GET /api/me/employer-treasury
@@ -45,7 +45,7 @@ export async function GET(_req: NextRequest) {
     treasury.read.getLockedBalance([onchainIdentity.employerAccountId]) as Promise<bigint>,
   ])
 
-  const scale = 10 ** MUSD_DECIMALS
+  const scale = 10 ** SUSDC_DECIMALS
   const availableUsd = Number(available) / scale
   const lockedUsd = Number(locked) / scale
 

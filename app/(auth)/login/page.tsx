@@ -7,7 +7,7 @@ import { motion } from 'framer-motion'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { useAccount, useSignMessage } from 'wagmi'
 import { SiweMessage } from 'siwe'
-import { mezoTestnet } from '@/lib/wagmi'
+import { somniaTestnet } from '@/lib/wagmi'
 import { useAuthStore } from '@/lib/auth-store'
 import { AxiosLogo } from '@/components/brand/AxiosLogo'
 
@@ -46,7 +46,7 @@ function ClientLoginContent() {
         statement: 'Sign in to Axios.',
         uri: window.location.origin,
         version: '1',
-        chainId: mezoTestnet.id,
+        chainId: somniaTestnet.id,
         nonce,
       })
       const message = siwe.prepareMessage()
@@ -195,7 +195,7 @@ function ClientLoginContent() {
               Welcome back
             </h2>
             <p className="mt-1.5 text-sm text-[var(--text-secondary)]">
-              Connect a Mezo testnet wallet, then sign the message to continue.
+              Connect a Somnia testnet wallet, then sign the message to continue.
             </p>
           </div>
 

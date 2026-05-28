@@ -2,7 +2,7 @@ import { mppx } from '@/lib/mpp'
 import { treasury, yieldRouter } from '@/lib/contracts'
 import { getEmployerById } from '@/lib/queries/employers'
 import { getEmployerOnchainIdentity, getEmployerOnchainIdentityError } from '@/lib/employer-onchain'
-import { MUSD_DECIMALS } from '@/lib/constants'
+import { SUSDC_DECIMALS } from '@/lib/constants'
 
 /**
  * POST /api/mpp/treasury/optimize
@@ -37,7 +37,7 @@ export const POST = mppx.charge({ amount: '0.10' })(async (req: Request) => {
     yieldRouter.read.getAllocation() as Promise<bigint[]>,
   ])
 
-  const scale = 10 ** MUSD_DECIMALS
+  const scale = 10 ** SUSDC_DECIMALS
   const availableUsd = Number(available) / scale
   const lockedUsd = Number(locked) / scale
   const totalUsd = availableUsd + lockedUsd

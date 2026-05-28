@@ -371,7 +371,7 @@ function ComplianceTab({
           <div className="flex items-start justify-between gap-3">
             <div className="flex items-center gap-2">
               <AlertCircle className="h-4 w-4 text-[var(--text-muted)]" />
-              <h3 className="text-sm font-semibold text-[var(--text-primary)]">ComplianceRegistry (Mezo)</h3>
+              <h3 className="text-sm font-semibold text-[var(--text-primary)]">ComplianceRegistry (Somnia)</h3>
             </div>
             {isPlatformAdmin ? (
               <Button variant="outline" size="sm" onClick={onManualReview} disabled={manualReviewLoading}>
@@ -402,7 +402,7 @@ function ComplianceTab({
                   : 'No recent check'}
             </span>
             <p className="mt-2 text-sm text-[var(--text-secondary)]">
-              Sanctions and policy outcomes are evaluated against the on-chain ComplianceRegistry on Mezo before payroll runs.
+              Sanctions and policy outcomes are evaluated against the on-chain ComplianceRegistry on Somnia before payroll runs.
             </p>
             {latestManualReview ? (
               <p className="mt-2 text-xs text-[var(--status-pending)]">

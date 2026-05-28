@@ -5,8 +5,8 @@ import { getAuthorizedEmployer, getEmployerOnchainIdentityForRequest } from '@/l
 import { treasury, tip403Registry } from '@/lib/contracts'
 import { PayrollBatcherABI } from '@/lib/abis/PayrollBatcher'
 import { PAYROLL_BATCHER_ADDRESS, PATHUSD_ADDRESS, PAYROLL_TREASURY_ADDRESS } from '@/lib/constants'
-import { MUSD_DECIMALS } from '@/lib/constants'
-import { musdToUnits } from '@/lib/musd'
+import { SUSDC_DECIMALS } from '@/lib/constants'
+import { susdcToUnits } from '@/lib/susdc'
 import { encodeMemo, memoHexToBytea } from '@/lib/memo'
 import { getEmployerOnchainIdentityError } from '@/lib/employer-onchain'
 
@@ -23,7 +23,7 @@ interface PayrollItem {
  * POST /api/employers/[id]/payroll
  *
  * Validates:
- *   1. PayrollTreasury.getAvailableBalance(employerId) >= total (MUSD deposited via deposit(), not wallet balance)
+ *   1. PayrollTreasury.getAvailableBalance(employerId) >= total (sUSDC deposited via deposit(), not wallet balance)
  *   2. All employee wallets pass TIP-403 isAuthorized check (if policyId set)
  *
  * Returns unsigned `executeBatchPayroll` calldata for the frontend Privy wallet to sign.
@@ -67,12 +67,12 @@ export async function POST(req: NextRequest, ctx: RouteContext) {
     )
   }
 
-  // ── 1. Compute total in token units (MUSD uses 18 decimals on Mezo) ─────
+  // ── 1. Compute total in token units (sUSDC uses 18 decimals on Somnia) ─────
   let totalUnits = 0n
   const amountsInUnits: bigint[] = []
 
   for (const item of items) {
-    const units = musdToUnits(item.amount)
+    const units = susdcToUnits(item.amount)
     amountsInUnits.push(units)
     totalUnits += units
   }
@@ -81,14 +81,14 @@ export async function POST(req: NextRequest, ctx: RouteContext) {
   const available = (await treasury.read.getAvailableBalance([onchainIdentity.employerAccountId])) as bigint
 
   if (available < totalUnits) {
-    const availableUsd = Number(available) / 10 ** MUSD_DECIMALS
-    const requiredUsd = Number(totalUnits) / 10 ** MUSD_DECIMALS
+    const availableUsd = Number(available) / 10 ** SUSDC_DECIMALS
+    const requiredUsd = Number(totalUnits) / 10 ** SUSDC_DECIMALS
     return NextResponse.json(
       {
         error: 'Insufficient treasury balance',
         code: 'INSUFFICIENT_TREASURY_DEPOSIT',
         detail:
-          'This check uses MUSD credited inside the PayrollTreasury contract for your employer account, not your wallet balance. ',
+          'This check uses sUSDC credited inside the PayrollTreasury contract for your employer account, not your wallet balance. ',
         available: available.toString(),
         required: totalUnits.toString(),
         availableUsd,
@@ -156,7 +156,7 @@ export async function POST(req: NextRequest, ctx: RouteContext) {
       .insert({
         employer_id: employerId,
         status: 'pending',
-        total_amount: Number(totalUnits) / 10 ** MUSD_DECIMALS,
+        total_amount: Number(totalUnits) / 10 ** SUSDC_DECIMALS,
         employee_count: items.length,
         token_address: PATHUSD_ADDRESS,
         created_by: employer.owner_user_id,

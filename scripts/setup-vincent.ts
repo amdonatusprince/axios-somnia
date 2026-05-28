@@ -49,7 +49,7 @@ async function main() {
       method: 'POST',
       body: JSON.stringify({
         account_name: 'Axios Payroll Agent',
-        account_description: 'Non-custodial PKP signing for Axios automated payroll on Mezo testnet',
+        account_description: 'Non-custodial PKP signing for Axios automated payroll on Somnia testnet',
       }),
     })) as { api_key: string; wallet_address: string }
     adminKey = account.api_key

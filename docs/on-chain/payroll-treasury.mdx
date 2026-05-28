@@ -1,9 +1,9 @@
 ---
 title: "Payroll Treasury"
-description: "PayrollTreasury — deposits, withdrawals, and balances on Mezo."
+description: "PayrollTreasury — deposits, withdrawals, and balances on Somnia."
 ---
 
-`PayrollTreasury` is the on-chain vault where employers hold **MUSD** before payroll. It uses explicit ERC-20 accounting (no native-balance shortcuts): **`getAvailableBalance`**, **`getLockedBalance`**, and per-employer state in the `employers` mapping.
+`PayrollTreasury` is the on-chain vault where employers hold **sUSDC** before payroll. It uses explicit ERC-20 accounting (no native-balance shortcuts): **`getAvailableBalance`**, **`getLockedBalance`**, and per-employer state in the `employers` mapping.
 
 ## Employer identity
 
@@ -19,11 +19,11 @@ The **first deposit** from an address sets that address as **`admin`** for that 
 
 ### Deposit
 
-`deposit(uint256 amount, bytes32 memo)` — `transferFrom` MUSD from `msg.sender` into the contract and credit **`balance`**.
+`deposit(uint256 amount, bytes32 memo)` — `transferFrom` sUSDC from `msg.sender` into the contract and credit **`balance`**.
 
 ### Withdraw
 
-`withdraw(uint256 amount)` — moves **available** MUSD back to **`msg.sender`**. Requires:
+`withdraw(uint256 amount)` — moves **available** sUSDC back to **`msg.sender`**. Requires:
 
 - `amount > 0`
 - Caller is the registered **`admin`** for `keccak256(abi.encodePacked(msg.sender))`
@@ -39,7 +39,7 @@ The **first deposit** from an address sets that address as **`admin`** for that 
 
 ## Token decimals
 
-MUSD on Mezo uses **18 decimals**. Format amounts in the app with the same precision as on-chain `uint256` values.
+sUSDC on Somnia uses **18 decimals**. Format amounts in the app with the same precision as on-chain `uint256` values.
 
 ## Dashboard
 

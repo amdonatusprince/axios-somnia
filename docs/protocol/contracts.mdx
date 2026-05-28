@@ -1,19 +1,19 @@
 ---
 title: "Contracts"
-description: "Core smart contracts on Mezo."
+description: "Core smart contracts on Somnia."
 ---
 
-Axios’s execution layer is a set of **Solidity** contracts on **Mezo** (chain ID **31611**). Addresses **change every time you redeploy** — copy them from the `forge script` output into `.env.local` (see [Contract deployment](/docs/operations/contract-deployment)).
+Axios’s execution layer is a set of **Solidity** contracts on **Somnia** (chain ID **50312**). Addresses **change every time you redeploy** — copy them from the `forge script` output into `.env.local` (see [Contract deployment](/docs/operations/contract-deployment)).
 
 ## Deployed stack
 
 | Contract | Role |
 |----------|------|
 | **ComplianceRegistry** | Owner-managed allow/block compliance flags used during registration and checks. |
-| **PayrollTreasury** | Holds MUSD per employer; **deposit**, **withdraw** (available only), gas budget; batcher locks/releases. |
+| **PayrollTreasury** | Holds sUSDC per employer; **deposit**, **withdraw** (available only), gas budget; batcher locks/releases. |
 | **PayrollBatcher** | Executes batch payroll; authorized agents; interacts with treasury + token transfers. |
 | **EmployeeRegistry** | Maps employees to employers and compliance state. |
-| **StreamVesting** | Salary streaming / vesting claims (MUSD). |
+| **StreamVesting** | Salary streaming / vesting claims (sUSDC). |
 | **YieldRouter** | Treasury yield routing (where configured). |
 
 ## Environment variables
@@ -27,6 +27,6 @@ The Next.js app reads deployment addresses from:
 - `NEXT_PUBLIC_STREAM_VESTING`
 - `NEXT_PUBLIC_YIELD_ROUTER`
 
-**MUSD** token (canonical on testnet): `NEXT_PUBLIC_MUSD_ADDRESS` — see Mezo docs for the current reference address.
+**sUSDC** token (canonical on testnet): `NEXT_PUBLIC_SUSDC_ADDRESS` — see Somnia docs for the current reference address.
 
-Do **not** hardcode old Moderato/Tempo addresses; always align with your `.env.local` and [Mezo Explorer](https://explorer.test.mezo.org).
+Do **not** hardcode old Moderato/Tempo addresses; always align with your `.env.local` and [Somnia Explorer](https://shannon-explorer.somnia.network).

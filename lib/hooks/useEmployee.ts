@@ -101,13 +101,13 @@ export function useEmployerTreasurySnapshot(employeeId: string | undefined) {
 export interface EmployeeBalanceResponse {
   wallet_address: string | null
   available_raw: string
-  /** On-chain MUSD in the payroll wallet (legacy alias: available_usd). */
-  wallet_musd_usd: number
+  /** On-chain sUSDC in the payroll wallet (legacy alias: available_usd). */
+  wallet_susdc_usd: number
   /** Total payroll credited in Axios (employer treasury → you), from payment history. */
   payroll_received_usd: number
-  /** @deprecated Use wallet_musd_usd — on-chain MUSD balance. */
+  /** @deprecated Use wallet_susdc_usd — on-chain sUSDC balance. */
   available_usd: number
-  /** ERC-20 decimals for `available_raw` (MUSD = 18 on Mezo). */
+  /** ERC-20 decimals for `available_raw` (sUSDC = 18 on Somnia). */
   decimals?: number
 }
 

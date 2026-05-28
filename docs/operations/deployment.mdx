@@ -3,13 +3,13 @@ title: "Application Deployment"
 description: "Deploying the Next.js app and backing services."
 ---
 
-The Axios app is a **Next.js 15** App Router project. It talks to **Supabase** (Postgres + RLS), **Mezo** via RPC, and issues **session JWTs** after **SIWE** (Sign-In With Ethereum) verification.
+The Axios app is a **Next.js 15** App Router project. It talks to **Supabase** (Postgres + RLS), **Somnia** via RPC, and issues **session JWTs** after **SIWE** (Sign-In With Ethereum) verification.
 
 ## Prerequisites
 
 1. **Supabase** — Create a project. Apply the schema from `scripts/schema.sql` (tables: `employers`, `employees`, `payroll_runs`, `payment_items`, etc.). Use the **service role** key only on the server.
-2. **Contract addresses** — Deploy contracts to Mezo testnet and set all `NEXT_PUBLIC_*` addresses in `.env.local`.
-3. **Auth** — No Privy app ID is required for the current wallet flow. The app uses **RainbowKit + wagmi + viem** on Mezo testnet; login uses **SIWE** and an **httpOnly** `axios-token` cookie. Set `SESSION_JWT_SECRET` (long random string).
+2. **Contract addresses** — Deploy contracts to Somnia testnet and set all `NEXT_PUBLIC_*` addresses in `.env.local`.
+3. **Auth** — No Privy app ID is required for the current wallet flow. The app uses **RainbowKit + wagmi + viem** on Somnia testnet; login uses **SIWE** and an **httpOnly** `axios-token` cookie. Set `SESSION_JWT_SECRET` (long random string).
 
 ## Hosting (e.g. Vercel)
 

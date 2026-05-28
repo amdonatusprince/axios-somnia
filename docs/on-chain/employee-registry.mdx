@@ -3,7 +3,7 @@ title: "Employee Registry"
 description: "On-chain employee wallets and ComplianceRegistry checks."
 ---
 
-The `EmployeeRegistry` contract links employer IDs to **employee wallet addresses** on **Mezo**, with optional checks against the **`ComplianceRegistry`** contract (policy IDs per employer).
+The `EmployeeRegistry` contract links employer IDs to **employee wallet addresses** on **Somnia**, with optional checks against the **`ComplianceRegistry`** contract (policy IDs per employer).
 
 ```mermaid
 sequenceDiagram
@@ -24,7 +24,7 @@ When an employer adds an employee, the wallet can be registered on-chain subject
 ## Data mapping
 
 The registry stores:
-- `wallet`: The **Mezo** `0x…` receiving address.
+- `wallet`: The **Somnia** `0x…` receiving address.
 - `employerId`: The entity authorizing and funding the payroll batches.
 - `employeeIdHash`: An encrypted hash mapping directly back to the employee's Personally Identifiable Information in the secure off-chain Supabase database.
 - `active`: A boolean toggling whether the employee is eligible and active for the upcoming batch run.

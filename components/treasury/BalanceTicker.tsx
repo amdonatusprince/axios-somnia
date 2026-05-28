@@ -4,7 +4,7 @@ import * as React from 'react'
 import { cn } from '@/lib/utils'
 
 interface BalanceTickerProps {
-  /** Starting balance in USD (MUSD / ERC-20 human amount) */
+  /** Starting balance in USD (sUSDC / ERC-20 human amount) */
   balance: number
   /** USD added per second (from annual salary ÷ seconds per year) */
   ratePerSecond?: number

@@ -63,13 +63,13 @@ function HeroSection() {
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          href="https://mezo.org"
+          href="https://somnia.network"
           target="_blank"
           rel="noopener noreferrer"
           className="mb-8 inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/5 px-3 py-1 text-xs font-medium text-accent"
         >
           <span aria-hidden="true">⚡</span>
-          Mezo · x402 agent payments
+          Somnia · x402 agent payments
         </motion.a>
 
         <motion.h1
@@ -89,7 +89,7 @@ function HeroSection() {
           transition={{ duration: 0.45, delay: 0.15 }}
           className="mx-auto mb-10 max-w-3xl text-lg leading-relaxed text-white/55 md:text-xl"
         >
-          Global enterprise payroll settled on Mezo in seconds — compliance checks on-chain, and agent-operated flows paid per call with HTTP 402 (x402).
+          Global enterprise payroll settled on Somnia in seconds — compliance checks on-chain, and agent-operated flows paid per call with HTTP 402 (x402).
         </motion.p>
 
         <motion.div
@@ -262,7 +262,7 @@ function ProblemSection() {
 const FEATURE_BLOCKS = [
   {
     title: 'Instant Settlement',
-    body: 'Payroll runs confirm in under a second on Mezo, with PayrollBatcher packaging an entire team payout into one atomic on-chain transaction.',
+    body: 'Payroll runs confirm in under a second on Somnia, with PayrollBatcher packaging an entire team payout into one atomic on-chain transaction.',
   },
   {
     title: 'Gasless for Everyone',
@@ -293,7 +293,7 @@ function FeatureVisual({ index }: { index: number }) {
           </div>
           <div className="rounded-xl border border-accent/20 bg-accent/5 p-4">
             <p className="text-sm font-semibold text-accent">0.4 seconds</p>
-            <p className="mt-1 text-xs text-white/45">Confirmed on Mezo</p>
+            <p className="mt-1 text-xs text-white/45">Confirmed on Somnia</p>
           </div>
         </div>
       </div>
@@ -402,7 +402,7 @@ const STEPS = [
     n: '01',
     icon: Building2,
     title: 'Connect your company',
-    body: 'Register, verify your business, and fund treasury — MUSD on Mezo for on-chain payroll flows.',
+    body: 'Register, verify your business, and fund treasury — sUSDC on Somnia for on-chain payroll flows.',
   },
   {
     n: '02',
@@ -722,23 +722,23 @@ function PricingSection() {
 const FAQS = [
   {
     q: 'Is Axios safe for my employees?',
-    a: 'Settlement happens on Mezo testnet with MUSD and auditable receipts. ComplianceRegistry enforces policy checks on-chain, and memos carry structured payroll metadata employers can reconcile.',
+    a: 'Settlement happens on Somnia testnet with sUSDC and auditable receipts. ComplianceRegistry enforces policy checks on-chain, and memos carry structured payroll metadata employers can reconcile.',
   },
   {
     q: 'Do employees need to understand crypto?',
-    a: 'No. Employees use familiar wallet sign-in (e.g. browser wallet) and see stable balances in MUSD. The product avoids seed-phrase homework — onboarding is invite-led and guided.',
+    a: 'No. Employees use familiar wallet sign-in (e.g. browser wallet) and see stable balances in sUSDC. The product avoids seed-phrase homework — onboarding is invite-led and guided.',
   },
   {
     q: 'How long does settlement take?',
-    a: 'Mezo testnet targets fast CometBFT-backed finality. PayrollBatcher can batch all salaries into a single transaction, so an entire payroll run settles in one confirmed block.',
+    a: 'Somnia testnet targets fast CometBFT-backed finality. PayrollBatcher can batch all salaries into a single transaction, so an entire payroll run settles in one confirmed block.',
   },
   {
     q: 'Is Axios custodial?',
-    a: 'Axios does not take custody of employee funds for settlement. Employers and employees interact through connected wallets; treasury and payroll logic run against your deployed Mezo contracts.',
+    a: 'Axios does not take custody of employee funds for settlement. Employers and employees interact through connected wallets; treasury and payroll logic run against your deployed Somnia contracts.',
   },
   {
     q: 'What countries and payout rails are supported?',
-    a: 'Axios is designed for global teams. Payroll is denominated in MUSD on Mezo with off-ramp and card paths where you integrate them — the core platform focuses on fast settlement, compliance metadata, and agent-safe APIs.',
+    a: 'Axios is designed for global teams. Payroll is denominated in sUSDC on Somnia with off-ramp and card paths where you integrate them — the core platform focuses on fast settlement, compliance metadata, and agent-safe APIs.',
   },
   {
     q: 'How does the 3.7% APY work?',
@@ -750,7 +750,7 @@ const FAQS = [
   },
   {
     q: 'What happens if a transaction fails?',
-    a: 'On Mezo, transactions either finalize quickly or revert with a clear receipt — no stuck pending states. Failed transactions are flagged with full details for your ops team.',
+    a: 'On Somnia, transactions either finalize quickly or revert with a clear receipt — no stuck pending states. Failed transactions are flagged with full details for your ops team.',
   },
   {
     q: 'Is Axios compliant with labor laws?',

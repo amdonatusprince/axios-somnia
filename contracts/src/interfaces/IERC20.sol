@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-/// @notice Minimal ERC-20 interface for Axios payroll contracts (MUSD on Mezo).
+/// @notice Minimal ERC-20 interface for Axios payroll contracts (sUSDC on Somnia).
 interface IERC20 {
     function transfer(address to, uint256 amount) external returns (bool);
     function transferFrom(address from, address to, uint256 amount) external returns (bool);

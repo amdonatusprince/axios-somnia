@@ -7,7 +7,7 @@ const PRESS_ITEMS = [
   {
     label: 'Company boilerplate',
     detail:
-      'Axios is borderless enterprise payroll on Mezo testnet with Bridge fiat rails, RainbowKit wallets, and an HTTP 402 / x402 gateway for machine-payable payroll APIs (discovery at /.well-known/x402).',
+      'Axios is borderless enterprise payroll on Somnia testnet with Bridge fiat rails, RainbowKit wallets, and an HTTP 402 / x402 gateway for machine-payable payroll APIs (discovery at /.well-known/x402).',
   },
   {
     label: 'Key proof points',
@@ -47,7 +47,7 @@ export default function PressPage() {
             <h2 className="text-xl font-semibold text-[var(--text-primary)]">Demo summary</h2>
           </div>
           <p className="mt-4 text-sm leading-7 text-[var(--text-secondary)]">
-            The live Axios demo shows an employer funding treasury, preparing payroll, executing on Mezo testnet, and an employee receiving funds, viewing decoded memo data, and moving money to spend or off-ramp.
+            The live Axios demo shows an employer funding treasury, preparing payroll, executing on Somnia testnet, and an employee receiving funds, viewing decoded memo data, and moving money to spend or off-ramp.
           </p>
           <a
             href="/contact"

@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getAuthorizedEmployee } from '@/lib/auth'
 import { pathUsdToken } from '@/lib/contracts'
 import { createServerClient } from '@/lib/supabase-server'
-import { MUSD_DECIMALS } from '@/lib/constants'
-import { musdUnitsToNumber } from '@/lib/musd'
+import { SUSDC_DECIMALS } from '@/lib/constants'
+import { susdcUnitsToNumber } from '@/lib/susdc'
 
 type RouteContext = { params: Promise<{ id: string }> }
 
@@ -34,26 +34,26 @@ export async function GET(req: NextRequest, ctx: RouteContext) {
     return NextResponse.json({
       wallet_address: null,
       available_raw: '0',
-      /** @deprecated Prefer wallet_musd_usd — same meaning: on-chain MUSD in the saved wallet. */
+      /** @deprecated Prefer wallet_susdc_usd — same meaning: on-chain sUSDC in the saved wallet. */
       available_usd: 0,
-      wallet_musd_usd: 0,
+      wallet_susdc_usd: 0,
       payroll_received_usd: payrollReceivedUsd,
-      decimals: MUSD_DECIMALS,
+      decimals: SUSDC_DECIMALS,
     })
   }
 
   const balance = (await pathUsdToken.read.balanceOf([employee.wallet_address as `0x${string}`])) as bigint
-  const walletMusd = musdUnitsToNumber(balance)
+  const walletMusd = susdcUnitsToNumber(balance)
 
   return NextResponse.json({
     wallet_address: employee.wallet_address,
     available_raw: balance.toString(),
-    /** On-chain MUSD ERC-20 balance of the payroll wallet (may differ if funds moved). */
-    wallet_musd_usd: walletMusd,
-    /** Legacy alias — same as wallet_musd_usd. */
+    /** On-chain sUSDC ERC-20 balance of the payroll wallet (may differ if funds moved). */
+    wallet_susdc_usd: walletMusd,
+    /** Legacy alias — same as wallet_susdc_usd. */
     available_usd: walletMusd,
     /** Total of payroll line items credited from employer treasury (Axios records). */
     payroll_received_usd: payrollReceivedUsd,
-    decimals: MUSD_DECIMALS,
+    decimals: SUSDC_DECIMALS,
   })
 }

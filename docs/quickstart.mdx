@@ -8,15 +8,15 @@ Whether you are an employer, an operator configuring an agent, or a developer in
 ### 1. Run payroll from the dashboard
 
 1. Register your company on the [Axios app](https://axios.xyz).
-2. Connect your **Mezo testnet** wallet (same wallet you save as `employer_admin_wallet` for treasury reads).
-3. **Deposit** MUSD into **PayrollTreasury** (Treasury → Deposit). Optionally **withdraw** available balance back to your wallet from the same page.
+2. Connect your **Somnia testnet** wallet (same wallet you save as `employer_admin_wallet` for treasury reads).
+3. **Deposit** sUSDC into **PayrollTreasury** (Treasury → Deposit). Optionally **withdraw** available balance back to your wallet from the same page.
 4. Add employees and run the payroll wizard to execute a batch on-chain.
 
 ### 2. Run payroll with an agent
 
 Use AgentCash or your own wallet to satisfy **HTTP 402** / x402 flows on `/api/mpp/*`.
 
-1. Configure an agent wallet with MUSD for per-call fees where required.
+1. Configure an agent wallet with sUSDC for per-call fees where required.
 2. Start a session (e.g. `POST /api/mpp/agent/session/treasury`) per your integration.
 3. Call `POST /api/mpp/payroll/execute` or other MPP routes with payment headers as documented.
 
@@ -28,4 +28,4 @@ Use AgentCash or your own wallet to satisfy **HTTP 402** / x402 flows on `/api/m
 
 ### Employee portal
 
-Employees sign in with **SIWE** (wallet) after accepting an invite. The portal shows **payroll received** (database totals from `payment_items`), **MUSD in wallet**, and **company treasury available** (read-only). Use an **employee** wallet session — not the employer treasury wallet — or `/api/me/*` will return **403**.
+Employees sign in with **SIWE** (wallet) after accepting an invite. The portal shows **payroll received** (database totals from `payment_items`), **sUSDC in wallet**, and **company treasury available** (read-only). Use an **employee** wallet session — not the employer treasury wallet — or `/api/me/*` will return **403**.

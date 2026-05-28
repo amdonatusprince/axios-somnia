@@ -144,7 +144,7 @@ export default function EmployerSettingsPage() {
                 {employer?.employer_admin_wallet ?? 'Not synced yet'}
               </p>
               <p className="mt-2 text-xs text-[var(--text-muted)]">
-                This wallet is the canonical employer identity for treasury, payroll, and yield on Mezo testnet.
+                This wallet is the canonical employer identity for treasury, payroll, and yield on Somnia testnet.
               </p>
             </div>
           </div>
@@ -153,7 +153,7 @@ export default function EmployerSettingsPage() {
 
       <WalletStatusPanel
         title="Employer Wallet Status"
-        description="Axios uses a canonical employer wallet for treasury, payroll, and yield reads on Mezo. This panel compares your connected wallet with the wallet saved on your employer record."
+        description="Axios uses a canonical employer wallet for treasury, payroll, and yield reads on Somnia. This panel compares your connected wallet with the wallet saved on your employer record."
         sessionLabel="Connected wallet"
         sessionAddress={sessionWallet}
         storedLabel="Canonical payroll wallet"

@@ -2,7 +2,7 @@ import { mppx } from '@/lib/mpp'
 import { treasury, yieldRouter, employeeRegistry, getServerWalletClient } from '@/lib/contracts'
 import { getEmployerById } from '@/lib/queries/employers'
 import { getEmployerOnchainIdentity, getEmployerOnchainIdentityError } from '@/lib/employer-onchain'
-import { MUSD_DECIMALS } from '@/lib/constants'
+import { SUSDC_DECIMALS } from '@/lib/constants'
 
 const DEPLOYER_KEY = (process.env.AXIOS_AGENT_PRIVATE_KEY ?? process.env.REMLO_AGENT_PRIVATE_KEY) as `0x${string}`
 
@@ -57,10 +57,10 @@ export const POST = mppx.charge({ amount: '0.02' })(async (req: Request) => {
           employerAdminWallet: onchainIdentity.adminWallet,
           employerAccountId: onchainIdentity.employerAccountId,
           availableRaw: available.toString(),
-          availableUsd: (Number(available) / 10 ** MUSD_DECIMALS).toFixed(6),
+          availableUsd: (Number(available) / 10 ** SUSDC_DECIMALS).toFixed(6),
           lockedRaw: locked.toString(),
-          lockedUsd: (Number(locked) / 10 ** MUSD_DECIMALS).toFixed(6),
-          totalUsd: ((Number(available) + Number(locked)) / 10 ** MUSD_DECIMALS).toFixed(6),
+          lockedUsd: (Number(locked) / 10 ** SUSDC_DECIMALS).toFixed(6),
+          totalUsd: ((Number(available) + Number(locked)) / 10 ** SUSDC_DECIMALS).toFixed(6),
         },
         timestamp,
       })
@@ -78,7 +78,7 @@ export const POST = mppx.charge({ amount: '0.02' })(async (req: Request) => {
           apyBps: Number(apy),
           apyPercent: Number(apy) / 100,
           accruedRaw: accrued.toString(),
-          accruedUsd: (Number(accrued) / 10 ** MUSD_DECIMALS).toFixed(6),
+          accruedUsd: (Number(accrued) / 10 ** SUSDC_DECIMALS).toFixed(6),
         },
         timestamp,
       })

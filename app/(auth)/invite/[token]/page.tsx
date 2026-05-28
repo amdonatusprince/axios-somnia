@@ -6,7 +6,7 @@ import { motion } from 'framer-motion'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { useAccount, useSignMessage } from 'wagmi'
 import { SiweMessage } from 'siwe'
-import { mezoTestnet } from '@/lib/wagmi'
+import { somniaTestnet } from '@/lib/wagmi'
 import { useAuthStore } from '@/lib/auth-store'
 import { AxiosLogo } from '@/components/brand/AxiosLogo'
 
@@ -79,7 +79,7 @@ export default function InvitePage() {
         statement: 'Sign in to Axios and accept your payroll invite.',
         uri: window.location.origin,
         version: '1',
-        chainId: mezoTestnet.id,
+        chainId: somniaTestnet.id,
         nonce,
       })
       const message = siwe.prepareMessage()
@@ -189,7 +189,7 @@ export default function InvitePage() {
               You&apos;ve been invited to Axios
             </h2>
             <p className="text-[var(--text-secondary)] text-sm mb-8">
-              Connect your Mezo testnet wallet and sign in once to link this invite to your wallet address.
+              Connect your Somnia testnet wallet and sign in once to link this invite to your wallet address.
             </p>
 
             <div className="p-4 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-default)] mb-6">
@@ -255,7 +255,7 @@ export default function InvitePage() {
                     )}
                   </button>
                 </div>
-                <p className="mt-4 text-center text-xs text-[var(--text-muted)]">Mezo testnet · MUSD payroll</p>
+                <p className="mt-4 text-center text-xs text-[var(--text-muted)]">Somnia testnet · sUSDC payroll</p>
               </>
             )}
           </>

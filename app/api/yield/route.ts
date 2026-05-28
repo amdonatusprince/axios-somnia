@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getCallerEmployer, getEmployerOnchainIdentityForRequest } from '@/lib/auth'
 import { yieldRouter } from '@/lib/contracts'
 import { getEmployerOnchainIdentityError } from '@/lib/employer-onchain'
-import { MUSD_DECIMALS } from '@/lib/constants'
+import { SUSDC_DECIMALS } from '@/lib/constants'
 
 /**
  * GET /api/yield
@@ -33,7 +33,7 @@ export async function GET(req: NextRequest) {
     apy_bps: Number(apy),
     apy_percent: Number(apy) / 100,
     accrued_raw: accrued.toString(),
-    accrued_usd: (Number(accrued) / 10 ** MUSD_DECIMALS).toFixed(6),
+    accrued_usd: (Number(accrued) / 10 ** SUSDC_DECIMALS).toFixed(6),
     employer_admin_wallet: onchainIdentity.adminWallet,
     employer_account_id: onchainIdentity.employerAccountId,
     yield_model: YIELD_MODEL_LABELS[modelIndex] ?? 'employer_keeps',

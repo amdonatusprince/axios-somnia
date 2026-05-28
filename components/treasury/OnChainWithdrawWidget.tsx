@@ -7,9 +7,9 @@ import { encodeFunctionData, keccak256, encodePacked } from 'viem'
 import { Loader2, ArrowDownToLine, CheckCircle2, AlertCircle, Wallet } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { publicClient } from '@/lib/contracts'
-import { mezoTestnet } from '@/lib/wagmi'
-import { MEZO_EXPLORER_URL, PAYROLL_TREASURY_ADDRESS } from '@/lib/constants'
-import { formatMusdUnits, musdToUnits } from '@/lib/musd'
+import { somniaTestnet } from '@/lib/wagmi'
+import { SOMNIA_EXPLORER_URL, PAYROLL_TREASURY_ADDRESS } from '@/lib/constants'
+import { formatSusdcUnits, susdcToUnits } from '@/lib/susdc'
 import { PayrollTreasuryABI } from '@/lib/abis/PayrollTreasury'
 import type { Database } from '@/lib/database.types'
 
@@ -27,7 +27,7 @@ interface Props {
 
 export function OnChainWithdrawWidget({ employer }: Props) {
   const { address, isConnected } = useAccount()
-  const { data: walletClient } = useWalletClient({ chainId: mezoTestnet.id })
+  const { data: walletClient } = useWalletClient({ chainId: somniaTestnet.id })
   const queryClient = useQueryClient()
 
   const [amount, setAmount] = React.useState('')
@@ -82,7 +82,7 @@ export function OnChainWithdrawWidget({ employer }: Props) {
 
     let amountWei: bigint
     try {
-      amountWei = musdToUnits(trimmed)
+      amountWei = susdcToUnits(trimmed)
     } catch {
       setError('Enter a valid amount (e.g. 100 or 99.50).')
       return
@@ -106,7 +106,7 @@ export function OnChainWithdrawWidget({ employer }: Props) {
       })
       const hash = await walletClient.sendTransaction({
         account: signerAddress,
-        chain: mezoTestnet,
+        chain: somniaTestnet,
         to: PAYROLL_TREASURY_ADDRESS,
         data,
       })
@@ -124,12 +124,12 @@ export function OnChainWithdrawWidget({ employer }: Props) {
   }
 
   const availableUsdStr =
-    availableWei !== null ? formatMusdUnits(availableWei) : null
+    availableWei !== null ? formatSusdcUnits(availableWei) : null
   const amountWeiParsed = React.useMemo(() => {
     const t = amount.trim()
     if (!t) return null
     try {
-      const w = musdToUnits(t)
+      const w = susdcToUnits(t)
       return w > 0n ? w : null
     } catch {
       return null
@@ -155,12 +155,12 @@ export function OnChainWithdrawWidget({ employer }: Props) {
           <p className="text-sm font-medium text-[var(--text-primary)]">Withdrawal confirmed</p>
           <p className="text-xs text-[var(--text-muted)]">
             {lastWithdrawWei != null
-              ? `${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 18 }).format(Number(formatMusdUnits(lastWithdrawWei)))} MUSD sent to your wallet.`
-              : 'MUSD sent to your wallet.'}
+              ? `${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 18 }).format(Number(formatSusdcUnits(lastWithdrawWei)))} sUSDC sent to your wallet.`
+              : 'sUSDC sent to your wallet.'}
           </p>
           {withdrawTx && (
             <a
-              href={`${MEZO_EXPLORER_URL}/tx/${withdrawTx}`}
+              href={`${SOMNIA_EXPLORER_URL}/tx/${withdrawTx}`}
               target="_blank"
               rel="noopener noreferrer"
               className="block text-xs text-[var(--accent)] hover:underline"
@@ -188,7 +188,7 @@ export function OnChainWithdrawWidget({ employer }: Props) {
   return (
     <div className="space-y-4">
       <p className="text-xs leading-relaxed text-[var(--text-muted)]">
-        Pull <strong>available</strong> MUSD from PayrollTreasury to the wallet that signs (your employer admin). Locked
+        Pull <strong>available</strong> sUSDC from PayrollTreasury to the wallet that signs (your employer admin). Locked
         funds from an in-flight payroll batch cannot be withdrawn until that run completes or unlocks. Requires a treasury
         contract that includes the <code className="text-[11px]">withdraw</code> function — redeploy if your deployment
         predates this feature.
@@ -209,7 +209,7 @@ export function OnChainWithdrawWidget({ employer }: Props) {
         </div>
       ) : (
         <div className="px-3 py-2 rounded-lg bg-[var(--bg-subtle)] text-xs text-[var(--text-muted)]">
-          Connect your Mezo employer wallet to withdraw.
+          Connect your Somnia employer wallet to withdraw.
         </div>
       )}
 
@@ -218,16 +218,16 @@ export function OnChainWithdrawWidget({ employer }: Props) {
           Locked for payroll:{' '}
           <span className="font-mono tabular-nums">
             {new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 18 }).format(
-              Number(formatMusdUnits(lockedWei)),
+              Number(formatSusdcUnits(lockedWei)),
             )}{' '}
-            MUSD
+            sUSDC
           </span>{' '}
           (not withdrawable yet)
         </p>
       )}
 
       <div className="space-y-1.5">
-        <label className="text-xs text-[var(--text-muted)]">Amount to withdraw (MUSD)</label>
+        <label className="text-xs text-[var(--text-muted)]">Amount to withdraw (sUSDC)</label>
         <div
           className={cn(
             'flex items-center gap-2 h-10 px-3 rounded-lg border bg-[var(--bg-base)] transition-colors',
@@ -246,20 +246,20 @@ export function OnChainWithdrawWidget({ employer }: Props) {
             disabled={status === 'withdrawing'}
             className="flex-1 bg-transparent text-sm text-[var(--text-primary)] focus:outline-none min-w-0"
           />
-          <span className="text-xs text-[var(--text-muted)] shrink-0">MUSD</span>
+          <span className="text-xs text-[var(--text-muted)] shrink-0">sUSDC</span>
         </div>
         {availableWei !== null && availableWei > 0n && (
           <button
             type="button"
-            onClick={() => setAmount(formatMusdUnits(availableWei))}
+            onClick={() => setAmount(formatSusdcUnits(availableWei))}
             className="text-xs text-[var(--accent)] hover:underline"
           >
-            Withdraw max ({formatMusdUnits(availableWei)} MUSD)
+            Withdraw max ({formatSusdcUnits(availableWei)} sUSDC)
           </button>
         )}
         {hasInsufficient && availableUsdStr !== null && (
           <p className="text-xs text-[var(--status-error)]">
-            Exceeds available ({availableUsdStr} MUSD in treasury for this wallet)
+            Exceeds available ({availableUsdStr} sUSDC in treasury for this wallet)
           </p>
         )}
       </div>

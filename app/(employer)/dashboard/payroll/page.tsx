@@ -157,7 +157,7 @@ export default function PayrollHistoryPage() {
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 6,
                       }).format(run.total_amount)}{' '}
-                      MUSD
+                      sUSDC
                     </>
                   )}
                 </p>

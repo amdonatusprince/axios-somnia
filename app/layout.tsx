@@ -18,11 +18,11 @@ export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? 'https://axios.xyz'),
   title: 'Payroll for the onchain era | Axios',
   description:
-    'Enterprise payroll on Mezo testnet with MUSD, ComplianceRegistry, and machine-payable MPP routes (x402 discovery). Bridge fiat, Mezo Passport wallets, and agent-ready treasury APIs.',
+    'Enterprise payroll on Somnia testnet with sUSDC, ComplianceRegistry, and machine-payable MPP routes (x402 discovery). Bridge fiat, SIWE wallet wallets, and agent-ready treasury APIs.',
   openGraph: {
     title: 'Payroll for the onchain era | Axios',
     description:
-      'Enterprise payroll on Mezo testnet with MUSD, ComplianceRegistry, and machine-payable MPP routes (x402 discovery). Bridge fiat, Mezo Passport wallets, and agent-ready treasury APIs.',
+      'Enterprise payroll on Somnia testnet with sUSDC, ComplianceRegistry, and machine-payable MPP routes (x402 discovery). Bridge fiat, SIWE wallet wallets, and agent-ready treasury APIs.',
     url: '/',
     siteName: 'Axios',
     type: 'website',
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
         url: '/opengraph-image',
         width: 1200,
         height: 630,
-        alt: 'Axios — payroll on Mezo with MUSD, MPP, and Bridge',
+        alt: 'Axios — payroll on Somnia with sUSDC, MPP, and Bridge',
       },
     ],
   },
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Payroll for the onchain era | Axios',
     description:
-      'Enterprise payroll on Mezo testnet with MUSD, ComplianceRegistry, and machine-payable MPP routes (x402 discovery). Bridge fiat, Mezo Passport wallets, and agent-ready treasury APIs.',
+      'Enterprise payroll on Somnia testnet with sUSDC, ComplianceRegistry, and machine-payable MPP routes (x402 discovery). Bridge fiat, SIWE wallet wallets, and agent-ready treasury APIs.',
     images: ['/twitter-image'],
   },
 }

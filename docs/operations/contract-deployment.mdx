@@ -1,12 +1,12 @@
 ---
 title: "Smart Contract Deployment"
-description: "Deploy the Axios protocol to Mezo with Foundry."
+description: "Deploy the Axios protocol to Somnia with Foundry."
 ---
 
 Contracts live under `contracts/`. The **`Deploy.s.sol`** script deploys, in order:
 
 1. **ComplianceRegistry**
-2. **PayrollTreasury** (MUSD token address is fixed in the script for Mezo)
+2. **PayrollTreasury** (sUSDC token address is fixed in the script for Somnia)
 3. **PayrollBatcher** — then `treasury.setBatcher(batcher)`
 4. **EmployeeRegistry**
 5. **StreamVesting**
@@ -15,7 +15,7 @@ Contracts live under `contracts/`. The **`Deploy.s.sol`** script deploys, in ord
 ## Prerequisites
 
 - [Foundry](https://book.getfoundry.sh/) (`forge`, `cast`)
-- A funded **deployer** wallet on Mezo testnet (gas in testnet BTC — use the [Mezo faucet](https://faucet.test.mezo.org/))
+- A funded **deployer** wallet on Somnia testnet (gas in testnet STT — use the [Somnia faucet](https://testnet.somnia.network/))
 - `DEPLOYER_PRIVATE_KEY` in `.env.local` (hex, with or without `0x` prefix)
 
 ## Deploy
@@ -23,7 +23,7 @@ Contracts live under `contracts/`. The **`Deploy.s.sol`** script deploys, in ord
 From the repo root:
 
 ```bash
-pnpm run contracts:deploy:mezo
+pnpm run contracts:deploy:somnia
 ```
 
 Or manually:
@@ -31,7 +31,7 @@ Or manually:
 ```bash
 cd contracts
 forge build
-forge script script/Deploy.s.sol:Deploy --rpc-url https://rpc.test.mezo.org --broadcast -vvv
+forge script script/Deploy.s.sol:Deploy --rpc-url https://dream-rpc.somnia.network/ --broadcast -vvv
 ```
 
 Export `DEPLOYER_PRIVATE_KEY` in the shell if it is not picked up automatically.
@@ -43,4 +43,4 @@ Export `DEPLOYER_PRIVATE_KEY` in the shell if it is not picked up automatically.
 3. Update **`employers.treasury_contract`** in Supabase if you want the UI to show the new treasury address for existing rows.
 4. **Treasury balances** are per contract address — funding on the old treasury does **not** migrate automatically.
 
-Broadcast artifacts: `contracts/broadcast/Deploy.s.sol/31611/run-latest.json`.
+Broadcast artifacts: `contracts/broadcast/Deploy.s.sol/50312/run-latest.json`.

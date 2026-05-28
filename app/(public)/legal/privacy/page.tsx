@@ -38,7 +38,7 @@ export default function PrivacyPolicyPage() {
         <section>
           <h2 className="text-xl font-semibold text-[var(--text-primary)] mb-4">3. Data Security</h2>
           <p className="text-[var(--text-secondary)] leading-relaxed">
-            Axios employs industry-standard security measures to protect your information. Wallets are self-custody (e.g. Mezo Passport / WalletConnect); we do not hold employee seed phrases. All sensitive data is encrypted at rest and in transit.
+            Axios employs industry-standard security measures to protect your information. Wallets are self-custody (e.g. SIWE wallet / WalletConnect); we do not hold employee seed phrases. All sensitive data is encrypted at rest and in transit.
           </p>
         </section>
 

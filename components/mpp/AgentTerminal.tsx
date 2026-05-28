@@ -29,7 +29,7 @@ const TYPE_PREFIX: Record<TerminalLine['type'], string> = {
 
 // Demo sequence shown on mount
 const DEMO_LINES: Omit<TerminalLine, 'id'>[] = [
-  { type: 'system', text: 'Axios Agent v1.0 — connecting to Mezo testnet…', timestamp: '' },
+  { type: 'system', text: 'Axios Agent v1.0 — connecting to Somnia testnet…', timestamp: '' },
   { type: 'system', text: 'x402 session opened · maxDeposit: $5.00 · channel: 0xabc…ef12', timestamp: '' },
   { type: 'request', text: 'GET /api/mpp/treasury/yield-rates', timestamp: '' },
   { type: 'payment', text: 'Payment: $0.01 · receipt: 0x7f3a…2c81', timestamp: '' },

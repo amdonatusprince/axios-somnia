@@ -52,7 +52,7 @@ export default function TreasuryPage() {
     <div className="space-y-6">
       <SectionHeader
         title="Treasury"
-        description="Track employer balances, deposit readiness, and payroll movement across the Mezo treasury."
+        description="Track employer balances, deposit readiness, and payroll movement across the Somnia treasury."
         action={
           <Button asChild>
             <Link href="/dashboard/treasury/deposit">
