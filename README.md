@@ -36,17 +36,6 @@ forge build
 forge script script/Deploy.s.sol --broadcast --rpc-url https://dream-rpc.somnia.network/
 ```
 
-Use the [Somnia faucet](https://testnet.somnia.network/) for testnet STT (gas).
-
-## Local development
-
-```bash
-pnpm install
-cp .env.local.example .env.local
-# fill in env vars
-pnpm dev
-```
-
 ## Demo agent
 
 ```bash
