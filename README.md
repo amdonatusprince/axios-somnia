@@ -1,10 +1,10 @@
 # Axios
 
 
-Axios is a borderless enterprise payroll on Somnia testnet with x402 integrated machine payments
+Axios is a borderless enterprise payroll on the Somnia testnet with x402 integrated machine payments
 
 # Submission Resources
-Link to Presentation: https://drive.google.com/file/d/1uymYGEzO-058eSYsODIPAR-rsqQCLZkl/view?usp=sharing
+Link to Presentation: https://drive.google.com/file/d/1sR3dscVXEL7bLOG87fLT7sPWDj24a3xj/view?usp=sharing
 
 Link to Demo Video: https://youtu.be/DQ6Ilbq-hws
 
