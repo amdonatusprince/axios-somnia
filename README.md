@@ -3,6 +3,13 @@
 
 Axios is a borderless enterprise payroll on Somnia testnet with x402 integrated machine payments
 
+# Submission Resources
+Link to Presentation: https://drive.google.com/file/d/1uymYGEzO-058eSYsODIPAR-rsqQCLZkl/view?usp=sharing
+
+Link to Demo Video: https://youtu.be/DQ6Ilbq-hws
+
+Live Demo Link: https://axios-mezo.up.railway.app/
+
 ## What it does
 
 Axios runs payroll through Foundry-deployed contracts (`PayrollTreasury`, `PayrollBatcher`, `EmployeeRegistry`, `StreamVesting`, `YieldRouter`) using standard **ERC-20** transfers and fixed memos. Compliance checks use the on-chain **ComplianceRegistry**. Programmatic access uses `/api/mpp/*` routes; payment middleware is a **no-op shim** in `lib/mpp.ts` today—wire **x402** verification there for paid calls.
