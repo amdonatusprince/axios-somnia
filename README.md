@@ -53,12 +53,6 @@ The script calls public MPP endpoints against `NEXT_PUBLIC_APP_URL` (default `ht
 
 Set `LIT_USAGE_KEY` and `VINCENT_PKP_ETH_ADDRESS` to activate live PKP signing in step 1b. Without them, the step runs in stub mode.
 
-To provision Vincent's env vars:
-
-```bash
-DELEGATEE_PRIVATE_KEY=0x... npx ts-node scripts/setup-vincent.ts
-```
-
 See `VINCENT_SETUP.md` for the full setup flow.
 
 ## Environment variables
