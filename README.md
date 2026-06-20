@@ -76,4 +76,3 @@ See `VINCENT_SETUP.md` for the full setup flow.
 | `DEPLOYER_PRIVATE_KEY` | Contract deployment key. |
 | `LIT_API_KEY` / `LIT_USAGE_KEY` / `VINCENT_PKP_ETH_ADDRESS` | Optional Lit / Vincent signing. |
 
-Ensure `employers.employer_admin_wallet` matches the connected wallet used for treasury and payroll signing.
