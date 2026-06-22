@@ -27,19 +27,5 @@ Axios runs payroll through Foundry-deployed contracts (`PayrollTreasury`, `Payro
 | Agent signing | Vincent / Lit Protocol PKPs (optional) |
 | Frontend | Next.js 15 App Router, TypeScript, Tailwind, shadcn/ui |
 | Database | Supabase (PostgreSQL, RLS) |
-| Auth | SIWE + `SESSION_JWT_SECRET`, httpOnly `axios-token` cookie |
-
-## MPP endpoints
-
-See route files under `app/api/mpp/`. Charges are defined in comments per route; the current `mppx` helper passes requests through for local development.
-
-## Smart contracts
-
-Deploy with Foundry from `contracts/` (set `DEPLOYER_PRIVATE_KEY`, use Somnia RPC). After deploy, copy addresses into `.env.local`.
-
-```bash
-cd contracts
-forge build
-forge script script/Deploy.s.sol --broadcast --rpc-url https://dream-rpc.somnia.network/
-```
+| Auth | SIWE + `SESSION_JWT_SECRET`, httpOnly `axios-token` 
 
