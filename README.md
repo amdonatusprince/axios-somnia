@@ -43,36 +43,3 @@ forge build
 forge script script/Deploy.s.sol --broadcast --rpc-url https://dream-rpc.somnia.network/
 ```
 
-## Demo agent
-
-```bash
-npx ts-node scripts/demo-agent.ts
-```
-
-The script calls public MPP endpoints against `NEXT_PUBLIC_APP_URL` (default `http://localhost:3000`). MPP payment headers are optional while the server uses the no-op payment shim.
-
-Set `LIT_USAGE_KEY` and `VINCENT_PKP_ETH_ADDRESS` to activate live PKP signing in step 1b. Without them, the step runs in stub mode.
-
-See `VINCENT_SETUP.md` for the full setup flow.
-
-## Environment variables
-
-| Variable | Description |
-|----------|-------------|
-| `NEXT_PUBLIC_APP_URL` | Public app origin. |
-| `NEXT_PUBLIC_SOMNIA_RPC` | Somnia testnet RPC (defaults in `lib/constants.ts` if unset). |
-| `NEXT_PUBLIC_SOMNIA_CHAIN_ID` | `50312` for testnet. |
-| `NEXT_PUBLIC_SUSDC_ADDRESS` | sUSDC token address. |
-| `NEXT_PUBLIC_COMPLIANCE_REGISTRY` | Deployed ComplianceRegistry. |
-| `NEXT_PUBLIC_PAYROLL_*` | Deployed protocol contract addresses. |
-| `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase client. |
-| `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` | WalletConnect project id for RainbowKit. |
-| `SESSION_JWT_SECRET` | Server-only HS256 secret for session JWTs. |
-| `SUPABASE_SERVICE_KEY` | Server-only Supabase service role. |
-| `BRIDGE_API_KEY` / `BRIDGE_WEBHOOK_SECRET` | Bridge integration. |
-| `AXIOS_TREASURY_ADDRESS` | Fee recipient for x402 discovery (`REMLO_TREASURY_ADDRESS` still accepted). |
-| `AXIOS_AGENT_PRIVATE_KEY` | Server agent for demo/on-chain calls (`REMLO_AGENT_PRIVATE_KEY` still accepted). |
-| `ADMIN_USER_IDS` | Comma-separated subs allowed for `/admin`. |
-| `DEPLOYER_PRIVATE_KEY` | Contract deployment key. |
-| `LIT_API_KEY` / `LIT_USAGE_KEY` / `VINCENT_PKP_ETH_ADDRESS` | Optional Lit / Vincent signing. |
-
